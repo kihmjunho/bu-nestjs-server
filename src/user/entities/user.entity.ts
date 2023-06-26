@@ -3,10 +3,13 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { UserRole } from './userRole';
+import { UserRole } from '../userRole';
+import { Profile } from './profile.entity';
 
 @Entity('users')
 export class User {
@@ -14,13 +17,13 @@ export class User {
   id: string;
 
   @Column()
-  role: UserRole;
-
-  @Column()
   username: string;
 
   @Column()
   password: string;
+
+  @Column()
+  role: UserRole;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
@@ -30,4 +33,8 @@ export class User {
 
   @DeleteDateColumn({ type: 'timestamp' })
   deletedAt: Date;
+
+  @OneToOne(() => Profile, (profile) => profile.user, { cascade: true })
+  @JoinColumn()
+  profile: Profile;
 }

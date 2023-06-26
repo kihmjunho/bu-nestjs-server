@@ -1,26 +1,14 @@
-import {
-  Column,
-  CreateDateColumn,
-  DeleteDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from './user.entity';
 
 @Entity('profiles')
-export class User {
+export class Profile {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
   nickname: string;
 
-  @CreateDateColumn({ type: 'timestamp' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ type: 'timestamp' })
-  updatedAt: Date;
-
-  @DeleteDateColumn({ type: 'timestamp' })
-  deletedAt: Date;
+  @OneToOne(() => User, (user) => user.profile)
+  user: User;
 }
