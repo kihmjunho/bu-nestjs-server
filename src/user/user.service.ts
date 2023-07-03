@@ -1,75 +1,88 @@
 import {
+  ConflictException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import { SignupUserRequestDto } from './dto/signupUser.request.dto';
 import { UserRole } from './userRole';
 import { LoginUserRequestDto } from './dto/loginUser.request.dto';
-import { Profile } from './entities/profile.entity';
 import { JwtService } from '@nestjs/jwt';
+import { SignupUserResponseDto } from './dto/signupUser.response.dto';
 
 @Injectable()
 export class UserService {
   constructor(
-    private readonly dataSource: DataSource,
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
   ) {}
 
-  async hashPassword(password: string): Promise<string> {
-    const saltRounds = 10; // 솔트 반복 횟수
-    const salt = await bcrypt.genSalt(saltRounds);
+  private async findByEmail(email: string): Promise<User | null> {
+    return await this.userRepository.findOne({
+      where: { email },
+    });
+  }
+  private async hashPassword(password: string): Promise<string> {
+    const saltRepeatCount = 10;
+    const salt = await bcrypt.genSalt(saltRepeatCount);
     return await bcrypt.hash(password, salt);
   }
 
-  async comparePassword(
+  private async comparePassword(
     password: string,
     hashedPassword: string,
   ): Promise<boolean> {
     return bcrypt.compare(password, hashedPassword);
   }
 
-  async signup(
-    signupUserRequestDto: SignupUserRequestDto,
-  ): Promise<{ message: string }> {
-    const { username, password, nickname } = signupUserRequestDto;
+  public async signup(signupUserRequestDto: SignupUserRequestDto) {
+    const { email, password, nickname } = signupUserRequestDto;
 
-    const user = new User();
-    user.username = username;
-    user.password = await this.hashPassword(password);
-    user.role = UserRole.NORMAL;
+    const existingUser = await this.findByEmail(email);
+    if (existingUser) {
+      throw new ConflictException(
+        '중복된 이메일입니다',
+        'EMAIL_IS_ALREADY_DUPLICATED',
+      );
+    }
 
-    const profile = new Profile();
-    profile.nickname = nickname;
+    const hashedPassword = await this.hashPassword(password);
+    const user = new User({
+      email,
+      password: hashedPassword,
+      role: UserRole.NORMAL,
+      nickname,
+    });
 
-    user.profile = profile;
+    const signupUser = await this.userRepository.save(user);
 
-    await this.dataSource.manager.save(user);
-    const message = `${nickname}님 회원가입을 축하합니다`;
-    return { message };
+    return new SignupUserResponseDto({
+      id: signupUser.id,
+      email: signupUser.email,
+      role: signupUser.role,
+      nickname: signupUser.nickname,
+    });
   }
 
   async login(loginUserRequestDto: LoginUserRequestDto) {
-    const { username, password } = loginUserRequestDto;
-    const user = await this.userRepository.findOne({
-      where: { username },
-      relations: ['profile'],
-    });
+    const { email, password } = loginUserRequestDto;
 
+    const user = await this.findByEmail(email);
     if (!user) {
-      throw new NotFoundException('없는 사용자입니다');
+      throw new NotFoundException('없는 사용자입니다', 'NOT_FOUND_USER');
     }
 
     const passwordsMatch = await this.comparePassword(password, user.password);
-
     if (!passwordsMatch) {
-      throw new UnauthorizedException('비밀번호가 일치하지 않습니다.');
+      throw new UnauthorizedException(
+        '비밀번호가 일치하지 않습니다.',
+        'PASSWORD_DOSE_NOT_MATCH',
+      );
     }
 
     const accessToken = this.jwtService.sign({

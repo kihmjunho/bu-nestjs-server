@@ -1,14 +1,15 @@
+// src/subcategories/subcategory.entity.ts
 import {
   Entity,
-  PrimaryGeneratedColumn,
   Column,
+  PrimaryGeneratedColumn,
   ManyToOne,
   OneToMany,
 } from 'typeorm';
 import { Category } from './category.entity';
-import { Post } from '../../post/entities/post.entity';
+import { Content } from '../../content/entities/content.entity';
 
-@Entity('sub_categories')
+@Entity()
 export class SubCategory {
   @PrimaryGeneratedColumn()
   id: number;
@@ -16,9 +17,9 @@ export class SubCategory {
   @Column()
   name: string;
 
-  @OneToMany(() => Post, (post) => post.subCategory)
-  posts: Post[];
-
   @ManyToOne(() => Category, (category) => category.subCategories)
   category: Category;
+
+  @OneToMany(() => Content, (content) => content.subCategory)
+  contents: Content[];
 }
