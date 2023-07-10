@@ -6,7 +6,7 @@ import { Content } from './entities/content.entity';
 import { Artwork } from './entities/artwork.entity';
 import { Category } from '../category/entities/category.entity';
 import { SubCategory } from '../category/entities/subCategory.entity';
-import { CreatePostRequestDto } from './dto/createPost.request.dto';
+import { CreateContentRequestDto } from './dto/createContent.request.dto';
 import { Exhibition } from './entities/exhibition.entity';
 import { GetOneRequestDto } from './dto/getOne.request.dto';
 
@@ -25,14 +25,27 @@ export class ContentService {
     private readonly subCategoryRepository: Repository<SubCategory>,
   ) {}
 
-  async create(createPostRequestDto: CreatePostRequestDto): Promise<Content> {
-    const { title, size, date, categoryId, subCategoryId } =
-      createPostRequestDto;
+  async create(
+    createContentRequestDto: CreateContentRequestDto,
+  ): Promise<Content> {
+    const {
+      title,
+      description,
+      height,
+      width,
+      price,
+      date,
+      categoryId,
+      subCategoryId,
+    } = createContentRequestDto;
 
-    const artwork = new Artwork();
     let savedArtwork;
-    if (size) {
-      artwork.size = size;
+    if (price && height && width) {
+      const artwork = new Artwork({
+        height,
+        width,
+        price,
+      });
       savedArtwork = await this.artworkRepository.save(artwork);
     }
 
@@ -43,10 +56,9 @@ export class ContentService {
       savedExhibition = await this.exhibitionRepository.save(exhibition);
     }
 
-    const content = new Content();
-    content.title = title;
+    const content = new Content({ title, description });
 
-    if (size) {
+    if (price) {
       content.artwork = savedArtwork;
     }
     if (date) {
@@ -57,14 +69,14 @@ export class ContentService {
       where: { id: categoryId },
     });
     if (category) {
-      content.category = category;
+      content.categoryId = categoryId;
     }
 
     const subCategory = await this.subCategoryRepository.findOne({
       where: { id: subCategoryId },
     });
     if (subCategory) {
-      content.subCategory = subCategory;
+      content.subCategoryId = subCategoryId;
     }
 
     return await this.contentRepository.save(content);
@@ -93,11 +105,15 @@ export class ContentService {
     }
 
     if (category === 'exhibition') {
-      const content = await this.contentRepository
-        .createQueryBuilder('content')
-        .leftJoinAndSelect('content.exhibition', 'exhibition')
-        .where('content.id = :id', { id })
-        .getOne();
+      const content = await this.contentRepository.findOne({
+        where: { id },
+        relations: ['artwork'],
+      });
+      // const content = await this.contentRepository
+      //   .createQueryBuilder('content')
+      //   .leftJoinAndSelect('content.exhibition', 'exhibition')
+      //   .where('content.id = :id', { id })
+      //   .getOne();
 
       if (!content) {
         throw new NotFoundException('존재하지 않는 게시글입니다');

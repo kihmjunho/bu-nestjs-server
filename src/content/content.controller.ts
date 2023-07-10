@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ContentService } from './content.service';
-import { CreatePostRequestDto } from './dto/createPost.request.dto';
+import { CreateContentRequestDto } from './dto/createContent.request.dto';
 import { GetOneRequestDto } from './dto/getOne.request.dto';
 import { Content } from './entities/content.entity';
 
@@ -10,9 +10,9 @@ export class ContentController {
 
   @Post()
   async create(
-    @Body() createPostRequestDto: CreatePostRequestDto,
+    @Body() createContentRequestDto: CreateContentRequestDto,
   ): Promise<Content> {
-    return await this.contentService.create(createPostRequestDto);
+    return await this.contentService.create(createContentRequestDto);
   }
 
   @Get()
