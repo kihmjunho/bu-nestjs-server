@@ -14,9 +14,30 @@ export class Exhibition {
   id: string;
 
   @Column()
+  year: number;
+
+  @Column()
   date: number;
 
   @OneToOne(() => Content, (content) => content.artwork)
   @JoinColumn()
   content: Content;
+
+  constructor(params: {
+    year: number;
+    date: number;
+    // materials: string;
+    // year: number;
+    // price: number;
+    // collector: string;
+  }) {
+    if (params) {
+      this.year = params.year;
+      this.date = params.date;
+      // this.materials = params.materials;
+      // this.year = params.year;
+      // this.price = params.price;
+      // this.collector = params.collector;
+    }
+  }
 }

@@ -1,4 +1,5 @@
 import { UserRole } from '../userRole';
+import { User } from '../entities/user.entity';
 
 export class SignupUserResponseDto {
   id: string;
@@ -6,10 +7,10 @@ export class SignupUserResponseDto {
   role: UserRole;
   nickname: string;
 
-  constructor(params) {
-    this.id = params.id;
-    this.email = params.email;
-    this.role = params.role;
-    this.nickname = params.nickname;
+  constructor(user: User) {
+    this.id = user.id;
+    this.email = user.email;
+    this.role = user.role;
+    this.nickname = user.nickname;
   }
 }

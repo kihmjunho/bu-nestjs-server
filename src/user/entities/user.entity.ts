@@ -1,4 +1,6 @@
 import {
+  BeforeInsert,
+  BeforeUpdate,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
@@ -7,6 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { UserRole } from '../userRole';
+import * as bcrypt from 'bcrypt';
 
 @Entity('users')
 export class User {
@@ -18,6 +21,18 @@ export class User {
 
   @Column()
   password: string;
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  async hashPassword(): Promise<void> {
+    const saltRepeatCount = 10;
+    const salt = await bcrypt.genSalt(saltRepeatCount);
+    this.password = await bcrypt.hash(this.password, salt);
+  }
+
+  async comparePassword(password: string): Promise<boolean> {
+    return bcrypt.compare(password, this.password);
+  }
 
   @Column()
   nickname: string;

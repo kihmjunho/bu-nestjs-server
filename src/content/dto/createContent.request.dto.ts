@@ -1,13 +1,15 @@
+import { IsNotEmpty } from 'class-validator';
+
 export class CreateContentRequestDto {
+  @IsNotEmpty()
   title: string;
+
+  @IsNotEmpty()
   description: string;
-  height?: number;
-  width?: number;
-  materials?: string;
-  year?: number;
-  price?: number;
-  collector?: string;
-  date?: number;
+
+  @IsNotEmpty()
   categoryId: number;
+
+  @IsNotEmpty()
   subCategoryId: number;
 }

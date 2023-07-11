@@ -20,7 +20,7 @@ export class UserController {
   @HttpCode(200)
   async login(
     @Body() loginUserRequestDto: LoginUserRequestDto,
-  ): Promise<{ accessToken }> {
+  ): Promise<{ accessToken: string }> {
     return await this.userService.login(loginUserRequestDto);
   }
 }

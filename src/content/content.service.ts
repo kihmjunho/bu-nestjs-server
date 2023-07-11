@@ -9,6 +9,8 @@ import { SubCategory } from '../category/entities/subCategory.entity';
 import { CreateContentRequestDto } from './dto/createContent.request.dto';
 import { Exhibition } from './entities/exhibition.entity';
 import { GetOneRequestDto } from './dto/getOne.request.dto';
+import { CreateArtworkRequestDto } from './dto/createArtwork.request.dto';
+import { CreateExhibitionRequestDto } from './dto/createExhibition.request.dto';
 
 @Injectable()
 export class ContentService {
@@ -26,57 +28,68 @@ export class ContentService {
   ) {}
 
   async create(
-    createContentRequestDto: CreateContentRequestDto,
+    createContentRequestDto:
+      | CreateContentRequestDto
+      | CreateArtworkRequestDto
+      | CreateExhibitionRequestDto,
   ): Promise<Content> {
     const {
       title,
       description,
       height,
       width,
-      price,
+      year,
       date,
       categoryId,
       subCategoryId,
-    } = createContentRequestDto;
+    } = createContentRequestDto as CreateArtworkRequestDto &
+      CreateExhibitionRequestDto;
 
     let savedArtwork;
-    if (price && height && width) {
+    if (width) {
       const artwork = new Artwork({
         height,
         width,
-        price,
       });
+
       savedArtwork = await this.artworkRepository.save(artwork);
     }
 
-    const exhibition = new Exhibition();
     let savedExhibition;
     if (date) {
-      exhibition.date = date;
+      const exhibition = new Exhibition({
+        year,
+        date,
+      });
+
       savedExhibition = await this.exhibitionRepository.save(exhibition);
     }
-
     const content = new Content({ title, description });
 
-    if (price) {
+    if (savedArtwork) {
       content.artwork = savedArtwork;
     }
-    if (date) {
+
+    if (savedExhibition) {
       content.exhibition = savedExhibition;
     }
 
-    const category = await this.categoryRepository.findOne({
-      where: { id: categoryId },
-    });
-    if (category) {
-      content.categoryId = categoryId;
+    if (categoryId) {
+      const category = await this.categoryRepository.findOne({
+        where: { id: categoryId },
+      });
+      if (category) {
+        content.categoryId = categoryId;
+      }
     }
 
-    const subCategory = await this.subCategoryRepository.findOne({
-      where: { id: subCategoryId },
-    });
-    if (subCategory) {
-      content.subCategoryId = subCategoryId;
+    if (subCategoryId) {
+      const subCategory = await this.subCategoryRepository.findOne({
+        where: { id: subCategoryId },
+      });
+      if (subCategory) {
+        content.subCategoryId = subCategoryId;
+      }
     }
 
     return await this.contentRepository.save(content);
