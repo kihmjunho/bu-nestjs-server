@@ -1,9 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 
-export class GetOneRequestDto {
-  @IsNotEmpty()
-  category: string;
-
+export class GetOneParamRequestDto {
   @IsNotEmpty()
   id: string;
 }

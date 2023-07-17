@@ -8,9 +8,11 @@ import { Category } from '../category/entities/category.entity';
 import { SubCategory } from '../category/entities/subCategory.entity';
 import { CreateContentRequestDto } from './dto/createContent.request.dto';
 import { Exhibition } from './entities/exhibition.entity';
-import { GetOneRequestDto } from './dto/getOne.request.dto';
+import { GetOneParamRequestDto } from './dto/getOne.param.request.dto';
 import { CreateArtworkRequestDto } from './dto/createArtwork.request.dto';
 import { CreateExhibitionRequestDto } from './dto/createExhibition.request.dto';
+import { CategoryType } from '../category/categoryType';
+import { GetOneQueryRequestDto } from './dto/getOne.query.request.dto';
 
 @Injectable()
 export class ContentService {
@@ -33,36 +35,22 @@ export class ContentService {
       | CreateArtworkRequestDto
       | CreateExhibitionRequestDto,
   ): Promise<Content> {
-    const {
-      title,
-      description,
-      height,
-      width,
-      year,
-      date,
-      categoryId,
-      subCategoryId,
-    } = createContentRequestDto as CreateArtworkRequestDto &
-      CreateExhibitionRequestDto;
+    const { title, description, categoryId, subCategoryId } =
+      createContentRequestDto as CreateArtworkRequestDto &
+        CreateExhibitionRequestDto;
 
     let savedArtwork;
-    if (width) {
-      const artwork = new Artwork({
-        height,
-        width,
-      });
-
-      savedArtwork = await this.artworkRepository.save(artwork);
+    if (categoryId === 2) {
+      savedArtwork = await this.createArtwork(
+        createContentRequestDto as CreateArtworkRequestDto,
+      );
     }
 
     let savedExhibition;
-    if (date) {
-      const exhibition = new Exhibition({
-        year,
-        date,
-      });
-
-      savedExhibition = await this.exhibitionRepository.save(exhibition);
+    if (categoryId === 3) {
+      savedExhibition = await this.createExhibition(
+        createContentRequestDto as CreateExhibitionRequestDto,
+      );
     }
     const content = new Content({ title, description });
 
@@ -95,46 +83,53 @@ export class ContentService {
     return await this.contentRepository.save(content);
   }
 
-  async getAll(): Promise<Content[]> {
-    return await this.contentRepository.find();
+  async createArtwork(
+    createArtworkRequestDto: CreateArtworkRequestDto,
+  ): Promise<Artwork> {
+    const artwork = new Artwork(createArtworkRequestDto);
+    return await this.artworkRepository.save(artwork);
   }
 
-  async getOne(getOneRequestDto: GetOneRequestDto) {
-    const { category, id } = getOneRequestDto;
+  async createExhibition(
+    createExhibitionRequestDto: CreateExhibitionRequestDto,
+  ): Promise<Exhibition> {
+    const exhibition = new Exhibition(createExhibitionRequestDto);
+    return await this.exhibitionRepository.save(exhibition);
+  }
+  async getAll(): Promise<Content[]> {
+    return await this.contentRepository.find({
+      relations: ['category'],
+    });
+  }
 
-    if (category === 'artwork') {
-      console.log(id);
-      const content = await this.contentRepository
-        .createQueryBuilder('content')
-        .leftJoinAndSelect('content.artwork', 'artwork')
-        .where('content.id = :id', { id })
-        .getOne();
+  async getOne(
+    getOneParamRequestDto: GetOneParamRequestDto,
+    getOneQueryRequestDto: GetOneQueryRequestDto,
+  ): Promise<Content> {
+    const { id } = getOneParamRequestDto;
+    const { category } = getOneQueryRequestDto;
 
-      if (!content) {
-        throw new NotFoundException('존재하지 않는 게시글입니다');
-      }
-
-      return content;
-    }
-
-    if (category === 'exhibition') {
-      const content = await this.contentRepository.findOne({
+    let content;
+    if (
+      category === CategoryType.ARTWORK ||
+      category === CategoryType.EXHIBITION
+    ) {
+      content = await this.contentRepository.findOne({
         where: { id },
-        relations: ['artwork'],
+        relations: [category],
       });
-      // const content = await this.contentRepository
-      //   .createQueryBuilder('content')
-      //   .leftJoinAndSelect('content.exhibition', 'exhibition')
-      //   .where('content.id = :id', { id })
-      //   .getOne();
-
-      if (!content) {
-        throw new NotFoundException('존재하지 않는 게시글입니다');
-      }
-
-      return content;
     }
 
-    return await this.contentRepository.findOneBy({ id });
+    if (category === CategoryType.POST) {
+      content = await this.contentRepository.findOne({
+        where: { id },
+      });
+    }
+
+    if (!content) {
+      throw new NotFoundException('없는 콘텐츠입니다', 'NOT_FOUND_CONTENT');
+    }
+
+    return content;
   }
 }
