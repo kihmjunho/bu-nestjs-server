@@ -4,13 +4,14 @@ import {
   Entity,
   JoinColumn,
   OneToOne,
+  PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Content } from './content.entity';
 
 @Entity()
 export class Artwork {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn()
   id: string;
 
   @Column()
@@ -32,7 +33,7 @@ export class Artwork {
   collector: string;
 
   @OneToOne(() => Content, (content) => content.artwork)
-  @JoinColumn()
+  @JoinColumn({ name: 'id', referencedColumnName: 'id' })
   content: Content;
 
   constructor(params: {

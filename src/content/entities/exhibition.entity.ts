@@ -1,16 +1,10 @@
 // src/artworks/artwork.entity.ts
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
 import { Content } from './content.entity';
 
 @Entity()
 export class Exhibition {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn()
   id: string;
 
   @Column()
@@ -20,7 +14,7 @@ export class Exhibition {
   date: number;
 
   @OneToOne(() => Content, (content) => content.artwork)
-  @JoinColumn()
+  @JoinColumn({ name: 'id', referencedColumnName: 'id' })
   content: Content;
 
   constructor(params: {

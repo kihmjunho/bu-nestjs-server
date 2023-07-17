@@ -13,6 +13,7 @@ import { SubCategory } from '../../category/entities/subCategory.entity';
 import { Artwork } from './artwork.entity';
 import { Exhibition } from './exhibition.entity';
 import { UserRole } from '../../user/userRole';
+import { Post } from './post.entity';
 
 @Entity()
 export class Content {
@@ -39,6 +40,9 @@ export class Content {
 
   @OneToOne(() => Exhibition, (exhibition) => exhibition.content)
   exhibition: Exhibition;
+
+  @OneToOne(() => Post, (post) => post.content)
+  post: Post;
 
   @ManyToOne(() => Category, (category) => category.contents)
   category: Category;

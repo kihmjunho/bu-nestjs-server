@@ -7,6 +7,7 @@ import { Artwork } from './entities/artwork.entity';
 import { Category } from '../category/entities/category.entity';
 import { SubCategory } from '../category/entities/subCategory.entity';
 import { Exhibition } from './entities/exhibition.entity';
+import { Post } from './entities/post.entity';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { Exhibition } from './entities/exhibition.entity';
       Exhibition,
       Category,
       SubCategory,
+      Post,
     ]),
   ],
   controllers: [ContentController],
