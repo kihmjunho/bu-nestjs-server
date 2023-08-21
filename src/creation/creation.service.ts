@@ -15,7 +15,7 @@ import { CategoryType } from '../category/categoryType';
 import { GetOneQueryRequestDto } from './dto/getOne.query.request.dto';
 
 @Injectable()
-export class ContentService {
+export class CreationService {
   constructor(
     @InjectRepository(Content)
     private readonly contentRepository: Repository<Content>,

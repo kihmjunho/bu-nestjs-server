@@ -1,4 +1,4 @@
-import { Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from "typeorm";
 import { Content } from './content.entity';
 
 @Entity()
@@ -9,4 +9,7 @@ export class Post {
   @OneToOne(() => Content, (content) => content.post)
   @JoinColumn({ name: 'id', referencedColumnName: 'id' })
   content: Content;
+
+  @Column()
+  metaDescription: string;
 }

@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
-import { ContentService } from './content.service';
+import { CreationService } from './creation.service';
 import { CreateContentRequestDto } from './dto/createContent.request.dto';
 import { GetOneParamRequestDto } from './dto/getOne.param.request.dto';
 import { Content } from './entities/content.entity';
@@ -9,8 +9,8 @@ import { CategoryType } from '../category/categoryType';
 import { GetOneQueryRequestDto } from './dto/getOne.query.request.dto';
 
 @Controller('contents')
-export class ContentController {
-  constructor(private readonly contentService: ContentService) {}
+export class CreationController {
+  constructor(private readonly contentService: CreationService) {}
 
   @Post()
   async create(

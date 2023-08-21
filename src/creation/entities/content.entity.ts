@@ -6,14 +6,14 @@ import {
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
-import { Category } from '../../category/entities/category.entity';
-import { SubCategory } from '../../category/entities/subCategory.entity';
-import { Artwork } from './artwork.entity';
-import { Exhibition } from './exhibition.entity';
-import { UserRole } from '../../user/userRole';
-import { Post } from './post.entity';
+  UpdateDateColumn
+} from "typeorm";
+import { Category } from "../../category/entities/category.entity";
+import { SubCategory } from "../../category/entities/subCategory.entity";
+import { Artwork } from "./artwork.entity";
+import { Exhibition } from "./exhibition.entity";
+import { Post } from "./post.entity";
+
 
 @Entity()
 export class Content {

@@ -7,7 +7,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { Category } from './category.entity';
-import { Content } from '../../content/entities/content.entity';
+import { Content } from '../../creation/entities/content.entity';
 
 @Entity()
 export class SubCategory {
