@@ -9,6 +9,7 @@ import { SubCategory } from '../category/entities/subCategory.entity';
 import { Exhibition } from './entities/exhibition.entity';
 import { Post } from './entities/post.entity';
 import { ArtworkCreationService } from './artwork-creation.service';
+import { ArtworkCreationController } from './artwork-creation.controller';
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import { ArtworkCreationService } from './artwork-creation.service';
       Post,
     ]),
   ],
-  controllers: [CreationController],
+  controllers: [CreationController, ArtworkCreationController],
   providers: [CreationService, ArtworkCreationService],
 })
 export class CreationModule {}

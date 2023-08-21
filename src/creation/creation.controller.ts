@@ -1,17 +1,12 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { CreationService } from './creation.service';
 import { GetOneParamRequestDto } from './dto/getOne.param.request.dto';
 import { Content } from './entities/content.entity';
-import { CreateArtworkRequestDto } from './dto/createArtwork.request.dto';
 import { GetOneQueryRequestDto } from './dto/getOne.query.request.dto';
-import { ArtworkCreationService } from './artwork-creation.service';
 
 @Controller('creations')
 export class CreationController {
-  constructor(
-    private readonly creationService: CreationService,
-    private readonly artworkCreationService: ArtworkCreationService,
-  ) {}
+  constructor(private readonly creationService: CreationService) {}
 
   // @Post()
   // async create(
@@ -23,14 +18,6 @@ export class CreationController {
   // ): Promise<Content> {
   //   return await this.creationService.create(createContentRequestDto);
   // }
-
-  // TODO : Artwork 등록
-  @Post('artworks')
-  async createArtwork(
-    @Body() createArtworkRequestDto: CreateArtworkRequestDto,
-  ) {
-    return await this.artworkCreationService.create(createArtworkRequestDto);
-  }
 
   @Get()
   async getContents(): Promise<Content[]> {

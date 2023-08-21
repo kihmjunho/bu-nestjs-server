@@ -9,7 +9,6 @@ export class ArtworkCreationService {
   constructor(private dataSource: DataSource) {}
 
   async create(createArtworkRequestDto: CreateArtworkRequestDto) {
-    console.log(createArtworkRequestDto);
     const {
       // materials,
       title,
