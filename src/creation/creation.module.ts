@@ -10,6 +10,8 @@ import { Exhibition } from './entities/exhibition.entity';
 import { Post } from './entities/post.entity';
 import { ArtworkCreationService } from './artwork-creation.service';
 import { ArtworkCreationController } from './artwork-creation.controller';
+import { TypeormArtworkRepository } from './typeorm-artwork.repository';
+import { ARTWORK_REPOSITORY } from '../common/constants/token.constant';
 
 @Module({
   imports: [
@@ -23,6 +25,13 @@ import { ArtworkCreationController } from './artwork-creation.controller';
     ]),
   ],
   controllers: [CreationController, ArtworkCreationController],
-  providers: [CreationService, ArtworkCreationService],
+  providers: [
+    CreationService,
+    ArtworkCreationService,
+    {
+      provide: ARTWORK_REPOSITORY,
+      useClass: TypeormArtworkRepository,
+    },
+  ],
 })
 export class CreationModule {}

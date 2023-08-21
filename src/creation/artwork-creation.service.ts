@@ -1,12 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateArtworkRequestDto } from './dto/createArtwork.request.dto';
 import { Artwork } from './entities/artwork.entity';
-import { DataSource } from 'typeorm';
 import { Content } from './entities/content.entity';
+import { ArtworkRepository } from './artwork.repository';
+import { ARTWORK_REPOSITORY } from '../common/constants/token.constant';
 
 @Injectable()
 export class ArtworkCreationService {
-  constructor(private dataSource: DataSource) {}
+  constructor(
+    @Inject(ARTWORK_REPOSITORY)
+    private readonly artworkRepository: ArtworkRepository,
+  ) {}
 
   async create(createArtworkRequestDto: CreateArtworkRequestDto) {
     const {
@@ -28,6 +32,6 @@ export class ArtworkCreationService {
       subCategoryId,
     });
     const artwork = new Artwork({ height, width, content });
-    await this.dataSource.manager.save(artwork);
+    await this.artworkRepository.save(artwork);
   }
 }
