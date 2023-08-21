@@ -1,12 +1,5 @@
 // src/artworks/artwork.entity.ts
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  OneToOne,
-  PrimaryColumn,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
 import { Content } from './content.entity';
 
 @Entity()
@@ -39,6 +32,7 @@ export class Artwork {
   constructor(params: {
     height: number;
     width: number;
+    content: Content;
     // materials: string;
     // year: number;
     // price: number;
@@ -47,6 +41,7 @@ export class Artwork {
     if (params) {
       this.height = params.height;
       this.width = params.width;
+      this.content = params.content;
       // this.materials = params.materials;
       // this.year = params.year;
       // this.price = params.price;

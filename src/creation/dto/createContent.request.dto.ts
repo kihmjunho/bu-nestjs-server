@@ -1,15 +1,15 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsOptional } from 'class-validator';
 
 export class CreateContentRequestDto {
-  @IsNotEmpty()
+  @IsOptional()
   title: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   description: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   categoryId: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   subCategoryId: number;
 }
