@@ -14,4 +14,13 @@ export class TypeormArtworkRepository implements ArtworkRepository {
   async save(artwork: Artwork): Promise<Artwork> {
     return await this.artworkRepository.save(artwork);
   }
+
+  async findOneById(id: string): Promise<Artwork | null> {
+    return await this.artworkRepository.findOne({
+      where: {
+        id,
+      },
+      relations: ['content'],
+    });
+  }
 }

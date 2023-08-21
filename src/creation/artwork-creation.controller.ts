@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateArtworkRequestDto } from './dto/createArtwork.request.dto';
 import { ArtworkCreationService } from './artwork-creation.service';
 
@@ -13,5 +13,10 @@ export class ArtworkCreationController {
     @Body() createArtworkRequestDto: CreateArtworkRequestDto,
   ) {
     return await this.artworkCreationService.create(createArtworkRequestDto);
+  }
+
+  @Get('/:id')
+  async findOne(@Param('id') id: string) {
+    return await this.artworkCreationService.findOne(id);
   }
 }
