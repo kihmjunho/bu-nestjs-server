@@ -25,7 +25,9 @@ export class Artwork {
   @Column()
   collector: string;
 
-  @OneToOne(() => Content, (content) => content.artwork)
+  @OneToOne(() => Content, (content) => content.artwork, {
+    cascade: ['insert'],
+  })
   @JoinColumn({ name: 'id', referencedColumnName: 'id' })
   content: Content;
 

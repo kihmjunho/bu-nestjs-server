@@ -27,7 +27,6 @@ export class ArtworkCreationService {
       categoryId,
       subCategoryId,
     });
-    await this.dataSource.manager.save(content);
     const artwork = new Artwork({ height, width, content });
     await this.dataSource.manager.save(artwork);
   }
