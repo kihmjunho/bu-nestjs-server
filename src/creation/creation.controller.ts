@@ -1,13 +1,14 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { CreationService } from './creation.service';
+import { FindCreationRequestDto } from './dto/findCreation.request.dto';
 
 @Controller('creations')
 export class CreationController {
   constructor(private readonly creationService: CreationService) {}
 
   @Get()
-  async findAll() {
-    return await this.creationService.findAll();
+  async findAll(@Query() findCreationRequestDto: FindCreationRequestDto) {
+    return await this.creationService.findAll(findCreationRequestDto);
   }
 
   // @Get('/:id')

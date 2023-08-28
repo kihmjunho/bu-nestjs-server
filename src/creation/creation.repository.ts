@@ -10,9 +10,25 @@ export class CreationRepository {
     private readonly contentRepository: Repository<Content>,
   ) {}
 
-  public async findAll() {
+  public async findByCategoryName(categoryName: string) {
     return await this.contentRepository.find({
       relations: ['category', 'subCategory'],
+      where: {
+        category: {
+          name: categoryName,
+        },
+      },
+    });
+  }
+
+  public async findBySubCategoryName(subCategoryName: string) {
+    return await this.contentRepository.find({
+      relations: ['category', 'subCategory'],
+      where: {
+        subCategory: {
+          name: subCategoryName,
+        },
+      },
     });
   }
 }
