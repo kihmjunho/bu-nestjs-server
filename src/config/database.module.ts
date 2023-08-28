@@ -21,6 +21,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
           synchronize: configService.get<boolean>('DB_SYNCHRONIZE'),
           namingStrategy: new SnakeNamingStrategy(),
           logging: configService.get<boolean>('DB_LOGGING'),
+          timezone: 'Asia/Seoul',
         };
       },
     }),

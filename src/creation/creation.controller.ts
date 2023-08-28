@@ -1,13 +1,19 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { CreationService } from './creation.service';
+import { FindCreationRequestDto } from './dto/findCreation.request.dto';
+import { Paginate, PaginateQuery } from 'nestjs-paginate';
 
 @Controller('creations')
 export class CreationController {
   constructor(private readonly creationService: CreationService) {}
 
   @Get()
-  async findAll() {
-    return await this.creationService.findAll();
+  async findAll(
+    @Query() findCreationRequestDto: FindCreationRequestDto,
+    @Paginate() query: PaginateQuery,
+  ) {
+    // console.log(query);
+    return await this.creationService.findAll(findCreationRequestDto, query);
   }
 
   // @Get('/:id')
