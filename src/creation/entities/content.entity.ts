@@ -12,7 +12,7 @@ import { Category } from '../../category/entities/category.entity';
 import { SubCategory } from '../../category/entities/subCategory.entity';
 import { Artwork } from './artwork.entity';
 import { Exhibition } from './exhibition.entity';
-import { UserRole } from '../../user/userRole';
+import { Post } from './post.entity';
 
 @Entity()
 export class Content {
@@ -40,6 +40,9 @@ export class Content {
   @OneToOne(() => Exhibition, (exhibition) => exhibition.content)
   exhibition: Exhibition;
 
+  @OneToOne(() => Post, (post) => post.content)
+  post: Post;
+
   @ManyToOne(() => Category, (category) => category.contents)
   category: Category;
 
@@ -52,10 +55,17 @@ export class Content {
   @Column()
   subCategoryId: number;
 
-  constructor(params: { title: string; description: string }) {
+  constructor(params: {
+    title: string;
+    description: string;
+    categoryId: number;
+    subCategoryId: number;
+  }) {
     if (params) {
       this.title = params.title;
       this.description = params.description;
+      this.categoryId = params.categoryId;
+      this.subCategoryId = params.subCategoryId;
     }
   }
 }

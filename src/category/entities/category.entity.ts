@@ -1,7 +1,7 @@
 // src/categories/category.entity.ts
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { SubCategory } from './subCategory.entity';
-import { Content } from '../../content/entities/content.entity';
+import { Content } from '../../creation/entities/content.entity';
 
 @Entity()
 export class Category {

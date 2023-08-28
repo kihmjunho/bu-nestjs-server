@@ -4,7 +4,7 @@ import { DatabaseModule } from './config/database.module';
 import { UserModule } from './user/user.module';
 import { JwtAuthModule } from './config/jwt/jwtAuth.module';
 import { CategoryModule } from './category/category.module';
-import { ContentModule } from './content/content.module';
+import { CreationModule } from './creation/creation.module';
 
 @Module({
   imports: [
@@ -13,7 +13,7 @@ import { ContentModule } from './content/content.module';
     UserModule,
     JwtAuthModule,
     CategoryModule,
-    ContentModule,
+    CreationModule,
   ],
   controllers: [],
   providers: [],
