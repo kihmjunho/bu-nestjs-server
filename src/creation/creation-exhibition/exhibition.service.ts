@@ -2,8 +2,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Content } from '../entities/content.entity';
 import { ExhibitionRepository } from './exhibition.repository';
 import { EXHIBITION_REPOSITORY } from '../../common/constants/token.constant';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { Exhibition } from '../entities/exhibition.entity';
 import { CreateExhibitionRequestDto } from '../dto/createExhibition.request.dto';
 
@@ -12,8 +10,6 @@ export class ExhibitionCreationService {
   constructor(
     @Inject(EXHIBITION_REPOSITORY)
     private readonly exhibitionRepository: ExhibitionRepository,
-    @InjectRepository(Exhibition)
-    private readonly exhibitionRepository2: Repository<Exhibition>,
   ) {}
 
   async create(createExhibitionRequestDto: CreateExhibitionRequestDto) {

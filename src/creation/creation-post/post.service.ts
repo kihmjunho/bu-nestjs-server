@@ -9,7 +9,7 @@ import { Post } from '../entities/post.entity';
 export class PostCreationService {
   constructor(
     @Inject(POST_REPOSITORY)
-    private readonly postRepository: PostRepository, // @InjectRepository(Exhibition) // private readonly exhibitionRepository2: Repository<Exhibition>,
+    private readonly postRepository: PostRepository,
   ) {}
 
   async create(createPostRequestDto: CreatePostRequestDto) {

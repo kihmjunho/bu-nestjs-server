@@ -3,7 +3,7 @@ import { PostCreationService } from './post.service';
 import { CreatePostRequestDto } from '../dto/createPost.request.dto';
 
 @Controller('creations/posts')
-export class ArtworkCreationController {
+export class PostCreationController {
   constructor(private readonly postCreationService: PostCreationService) {}
 
   @Post()

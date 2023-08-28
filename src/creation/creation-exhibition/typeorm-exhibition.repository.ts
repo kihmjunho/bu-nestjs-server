@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ExhibitionRepository } from './exhibition.repository';
 import { Exhibition } from '../entities/exhibition.entity';
-import { Artwork } from '../entities/artwork.entity';
 
 @Injectable()
 export class TypeormExhibitionRepository implements ExhibitionRepository {

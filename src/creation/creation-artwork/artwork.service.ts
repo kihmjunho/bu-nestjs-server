@@ -4,16 +4,12 @@ import { Artwork } from '../entities/artwork.entity';
 import { Content } from '../entities/content.entity';
 import { ArtworkRepository } from './artwork.repository';
 import { ARTWORK_REPOSITORY } from '../../common/constants/token.constant';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 
 @Injectable()
 export class ArtworkCreationService {
   constructor(
     @Inject(ARTWORK_REPOSITORY)
     private readonly artworkRepository: ArtworkRepository,
-    @InjectRepository(Artwork)
-    private readonly artworkRepository2: Repository<Artwork>,
   ) {}
 
   async create(createArtworkRequestDto: CreateArtworkRequestDto) {
