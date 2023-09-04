@@ -57,8 +57,10 @@ export class Content {
   @ManyToOne(() => SubCategory, (subCategory) => subCategory.contents)
   subCategory: SubCategory;
 
-  @OneToMany(() => CreationImage, (creationImage) => creationImage.content)
-  creationImages: CreationImage[];
+  @OneToMany(() => CreationImage, (creationImage) => creationImage.content, {
+    cascade: ['insert'],
+  })
+  creationImages?: CreationImage[];
 
   @Column()
   subCategoryId: number;
@@ -69,6 +71,7 @@ export class Content {
     thumbnail: string;
     categoryId: number;
     subCategoryId: number;
+    creationImages?: CreationImage[];
   }) {
     if (params) {
       this.title = params.title;
@@ -76,6 +79,7 @@ export class Content {
       this.thumbnail = params.thumbnail;
       this.categoryId = params.categoryId;
       this.subCategoryId = params.subCategoryId;
+      this.creationImages = params.creationImages;
     }
   }
 }

@@ -15,4 +15,9 @@ export class CreationImage {
 
   @ManyToOne(() => Content, (content) => content.creationImages)
   content: Content;
+
+  constructor(url: string, seq: number) {
+    this.url = url;
+    this.seq = seq;
+  }
 }

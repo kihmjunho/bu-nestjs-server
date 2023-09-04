@@ -9,6 +9,7 @@ import { CreateExhibitionRequestDto } from '../dto-create/createExhibition.reque
 import { CreateContentResponseDto } from '../dto-response/createContent.response.dto';
 import { CommonRepository } from '../common/common.repository';
 import { GetExhibitionParamResponseDto } from '../dto-response/getExhibition.param.response.dto';
+import { CreationImage } from '../entities/creationImage.entity';
 
 @Injectable()
 export class ExhibitionCreationService {
@@ -30,23 +31,22 @@ export class ExhibitionCreationService {
       images,
     } = createExhibitionRequestDto;
 
+    const creationImages: CreationImage[] = images.map(
+      (image, index) => new CreationImage(image, index + 1),
+    );
+
     const content = new Content({
       title,
       description,
       thumbnail,
       categoryId,
       subCategoryId,
+      creationImages,
     });
     const exhibition = new Exhibition({ year, date, content });
     const data = await this.exhibitionRepository.save(exhibition);
 
-    const name = await this.commonRepository.findCategoryNameById(
-      subCategoryId,
-    );
-
-    const url = `/exhibition/${name}/${data.id}`;
-
-    return new CreateContentResponseDto(url);
+    return new CreateContentResponseDto(data.id);
   }
 
   async findAll() {
