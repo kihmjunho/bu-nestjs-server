@@ -25,6 +25,7 @@ import { PostCreationController } from './creation-post/post.controller';
 import { PostCreationService } from './creation-post/post.service';
 import { TypeormPostRepository } from './creation-post/typeorm-post.repository';
 import { CreationImage } from './entities/creationImage.entity';
+import { ExhibitionFactory } from './creation-exhibition/exhibition.factory';
 @Module({
   imports: [
     TypeOrmModule.forFeature([
@@ -62,6 +63,7 @@ import { CreationImage } from './entities/creationImage.entity';
       provide: POST_REPOSITORY,
       useClass: TypeormPostRepository,
     },
+    ExhibitionFactory,
   ],
 })
 export class CreationModule {}
