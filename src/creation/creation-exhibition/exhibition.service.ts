@@ -27,6 +27,7 @@ export class ExhibitionCreationService {
       subCategoryId,
       year,
       date,
+      images,
     } = createExhibitionRequestDto;
 
     const content = new Content({

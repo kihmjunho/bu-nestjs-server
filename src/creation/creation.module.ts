@@ -24,6 +24,7 @@ import { CommonRepository } from './common/common.repository';
 import { PostCreationController } from './creation-post/post.controller';
 import { PostCreationService } from './creation-post/post.service';
 import { TypeormPostRepository } from './creation-post/typeorm-post.repository';
+import { CreationImage } from './entities/creationImage.entity';
 @Module({
   imports: [
     TypeOrmModule.forFeature([
@@ -33,6 +34,7 @@ import { TypeormPostRepository } from './creation-post/typeorm-post.repository';
       Category,
       SubCategory,
       Post,
+      CreationImage,
     ]),
   ],
   controllers: [

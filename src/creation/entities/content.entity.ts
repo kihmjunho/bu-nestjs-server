@@ -4,6 +4,7 @@ import {
   DeleteDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -13,6 +14,7 @@ import { SubCategory } from '../../category/entities/subCategory.entity';
 import { Artwork } from './artwork.entity';
 import { Exhibition } from './exhibition.entity';
 import { Post } from './post.entity';
+import { CreationImage } from './creationImage.entity';
 
 @Entity()
 export class Content {
@@ -54,6 +56,9 @@ export class Content {
 
   @ManyToOne(() => SubCategory, (subCategory) => subCategory.contents)
   subCategory: SubCategory;
+
+  @OneToMany(() => CreationImage, (creationImage) => creationImage.content)
+  creationImages: CreationImage[];
 
   @Column()
   subCategoryId: number;
