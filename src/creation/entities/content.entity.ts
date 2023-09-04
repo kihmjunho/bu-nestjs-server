@@ -3,10 +3,12 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
+  RelationId,
   UpdateDateColumn,
 } from 'typeorm';
 import { Category } from '../../category/entities/category.entity';
@@ -28,7 +30,7 @@ export class Content {
   description: string;
 
   @Column()
-  thumbnail: string;
+  thumbnailId: string;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
@@ -68,7 +70,7 @@ export class Content {
   constructor(params: {
     title: string;
     description: string;
-    thumbnail: string;
+    thumbnailId: string;
     categoryId: number;
     subCategoryId: number;
     creationImages?: CreationImage[];
@@ -76,7 +78,7 @@ export class Content {
     if (params) {
       this.title = params.title;
       this.description = params.description;
-      this.thumbnail = params.thumbnail;
+      this.thumbnailId = params.thumbnailId;
       this.categoryId = params.categoryId;
       this.subCategoryId = params.subCategoryId;
       this.creationImages = params.creationImages;

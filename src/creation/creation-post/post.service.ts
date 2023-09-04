@@ -20,7 +20,7 @@ export class PostCreationService {
     const {
       title,
       description,
-      thumbnail,
+      thumbnailId,
       categoryId,
       subCategoryId,
       metaDescription,
@@ -28,7 +28,7 @@ export class PostCreationService {
     const content = new Content({
       title,
       description,
-      thumbnail,
+      thumbnailId,
       categoryId,
       subCategoryId,
     });

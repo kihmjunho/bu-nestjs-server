@@ -20,18 +20,17 @@ export class ExhibitionCreationService {
     const {
       title,
       description,
-      thumbnail,
+      thumbnailId,
       categoryId,
       subCategoryId,
       year,
       date,
       images,
     } = createExhibitionRequestDto;
-
     const exhibition = this.exhibitionFactory.create({
       title,
       description,
-      thumbnail,
+      thumbnailId,
       categoryId,
       subCategoryId,
       year,

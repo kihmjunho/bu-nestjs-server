@@ -6,7 +6,7 @@ import { Exhibition } from '../entities/exhibition.entity';
 interface Params {
   title: string;
   description: string;
-  thumbnail: string;
+  thumbnailId: string;
   categoryId: number;
   subCategoryId: number;
   year: number;
@@ -21,7 +21,7 @@ export class ExhibitionFactory {
       images,
       title,
       description,
-      thumbnail,
+      thumbnailId,
       categoryId,
       subCategoryId,
       year,
@@ -34,7 +34,7 @@ export class ExhibitionFactory {
     const content = new Content({
       title,
       description,
-      thumbnail,
+      thumbnailId,
       categoryId,
       subCategoryId,
       creationImages,

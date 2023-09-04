@@ -17,10 +17,11 @@ export class ArtworkCreationService {
   ) {}
 
   async create(createArtworkRequestDto: CreateArtworkRequestDto) {
+    console.log('--------------');
     const {
       title,
       description,
-      thumbnail,
+      thumbnailId,
       categoryId,
       subCategoryId,
       height,
@@ -31,10 +32,11 @@ export class ArtworkCreationService {
       year,
     } = createArtworkRequestDto;
 
+    console.log('--------------asdfasdf');
     const content = new Content({
       title,
       description,
-      thumbnail,
+      thumbnailId,
       categoryId,
       subCategoryId,
     });
