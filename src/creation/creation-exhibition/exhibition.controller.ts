@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ExhibitionCreationService } from './exhibition.service';
-import { CreateExhibitionRequestDto } from '../dto/createExhibition.request.dto';
+import { CreateExhibitionRequestDto } from '../dto-create/createExhibition.request.dto';
 
 @Controller('creations/exhibitions')
 export class ExhibitionCreationController {
@@ -24,6 +24,7 @@ export class ExhibitionCreationController {
 
   @Get('/:id')
   async findOne(@Param('id') id: string) {
+    console.log(id);
     return await this.exhibitionCreationService.findOne(id);
   }
 }

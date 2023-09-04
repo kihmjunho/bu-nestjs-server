@@ -35,19 +35,19 @@ export class Artwork {
     height: number;
     width: number;
     content: Content;
-    // materials: string;
-    // year: number;
-    // price: number;
-    // collector: string;
+    materials: string;
+    year: number;
+    price: number;
+    collector: string;
   }) {
     if (params) {
       this.height = params.height;
       this.width = params.width;
       this.content = params.content;
-      // this.materials = params.materials;
-      // this.year = params.year;
-      // this.price = params.price;
-      // this.collector = params.collector;
+      this.materials = params.materials;
+      this.year = params.year;
+      this.price = params.price;
+      this.collector = params.collector;
     }
   }
 }

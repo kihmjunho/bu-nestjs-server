@@ -1,49 +1,73 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { CreateArtworkRequestDto } from '../dto/createArtwork.request.dto';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { CreateArtworkRequestDto } from '../dto-create/createArtwork.request.dto';
 import { Artwork } from '../entities/artwork.entity';
 import { Content } from '../entities/content.entity';
 import { ArtworkRepository } from './artwork.repository';
 import { ARTWORK_REPOSITORY } from '../../common/constants/token.constant';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { GetArtworkParamResponseDto } from '../dto-response/getArtwork.param.response.dto';
+import { CreateContentResponseDto } from '../dto-response/createContent.response.dto';
+import { CommonRepository } from '../common/common.repository';
 
 @Injectable()
 export class ArtworkCreationService {
   constructor(
     @Inject(ARTWORK_REPOSITORY)
     private readonly artworkRepository: ArtworkRepository,
-    @InjectRepository(Artwork)
-    private readonly artworkRepository2: Repository<Artwork>,
+    private readonly commonRepository: CommonRepository,
   ) {}
 
   async create(createArtworkRequestDto: CreateArtworkRequestDto) {
     const {
-      // materials,
       title,
       description,
+      thumbnail,
       categoryId,
       subCategoryId,
       height,
-      // price,
-      // collector,
-      // year,
       width,
+      materials,
+      price,
+      collector,
+      year,
     } = createArtworkRequestDto;
+
     const content = new Content({
       title,
       description,
+      thumbnail,
       categoryId,
       subCategoryId,
     });
-    const artwork = new Artwork({ height, width, content });
-    await this.artworkRepository.save(artwork);
+    const artwork = new Artwork({
+      height,
+      width,
+      materials,
+      price,
+      collector,
+      year,
+      content,
+    });
+    const data = await this.artworkRepository.save(artwork);
+
+    const name = await this.commonRepository.findCategoryNameById(
+      subCategoryId,
+    );
+
+    const url = `/artwork/${name}/${data.id}`;
+    return new CreateContentResponseDto(url);
   }
 
   async findAll() {
     return await this.artworkRepository.findAll();
   }
 
-  async findOne(id: string) {
-    return await this.artworkRepository.findOneById(id);
+  async findOne(id: string): Promise<GetArtworkParamResponseDto> {
+    const response: Artwork | null = await this.artworkRepository.findOneById(
+      id,
+    );
+
+    if (!response) throw new Error('error');
+
+    return new GetArtworkParamResponseDto(response);
   }
 }

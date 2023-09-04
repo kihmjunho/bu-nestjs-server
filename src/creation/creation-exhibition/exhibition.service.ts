@@ -5,39 +5,47 @@ import { EXHIBITION_REPOSITORY } from '../../common/constants/token.constant';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Exhibition } from '../entities/exhibition.entity';
-import { CreateExhibitionRequestDto } from '../dto/createExhibition.request.dto';
+import { CreateExhibitionRequestDto } from '../dto-create/createExhibition.request.dto';
+import { CreateContentResponseDto } from '../dto-response/createContent.response.dto';
+import { CommonRepository } from '../common/common.repository';
+import { GetExhibitionParamResponseDto } from '../dto-response/getExhibition.param.response.dto';
 
 @Injectable()
 export class ExhibitionCreationService {
   constructor(
     @Inject(EXHIBITION_REPOSITORY)
     private readonly exhibitionRepository: ExhibitionRepository,
-    @InjectRepository(Exhibition)
-    private readonly exhibitionRepository2: Repository<Exhibition>,
+    private readonly commonRepository: CommonRepository,
   ) {}
 
   async create(createExhibitionRequestDto: CreateExhibitionRequestDto) {
     const {
-      // materials,
       title,
       description,
+      thumbnail,
       categoryId,
       subCategoryId,
       year,
       date,
-      // price,
-      // collector,
-      // year,
-      // width,
     } = createExhibitionRequestDto;
+
     const content = new Content({
       title,
       description,
+      thumbnail,
       categoryId,
       subCategoryId,
     });
     const exhibition = new Exhibition({ year, date, content });
-    await this.exhibitionRepository.save(exhibition);
+    const data = await this.exhibitionRepository.save(exhibition);
+
+    const name = await this.commonRepository.findCategoryNameById(
+      subCategoryId,
+    );
+
+    const url = `/exhibition/${name}/${data.id}`;
+
+    return new CreateContentResponseDto(url);
   }
 
   async findAll() {
@@ -45,6 +53,11 @@ export class ExhibitionCreationService {
   }
 
   async findOne(id: string) {
-    return await this.exhibitionRepository.findOneById(id);
+    const response = await this.exhibitionRepository.findOneById(id);
+
+    if (!response) {
+      throw new Error('ll');
+    }
+    return new GetExhibitionParamResponseDto(response);
   }
 }

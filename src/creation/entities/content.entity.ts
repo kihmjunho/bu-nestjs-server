@@ -25,6 +25,9 @@ export class Content {
   @Column()
   description: string;
 
+  @Column()
+  thumbnail: string;
+
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
@@ -58,12 +61,14 @@ export class Content {
   constructor(params: {
     title: string;
     description: string;
+    thumbnail: string;
     categoryId: number;
     subCategoryId: number;
   }) {
     if (params) {
       this.title = params.title;
       this.description = params.description;
+      this.thumbnail = params.thumbnail;
       this.categoryId = params.categoryId;
       this.subCategoryId = params.subCategoryId;
     }

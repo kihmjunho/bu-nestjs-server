@@ -1,16 +1,27 @@
-import { Controller, Post, Body, Param, Get } from '@nestjs/common';
+import { Controller, Post, Body, Param, Get, Query } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { Category } from './entities/category.entity';
 import { SubCategory } from './entities/subCategory.entity';
+import { GetOneQueryRequestDto } from './dto/getOne.query.request.dto';
 
 @Controller('categories')
 export class CategoryController {
   constructor(private categoryService: CategoryService) {}
 
-  @Get()
-  async getAllCategoriesWithSubCategories(): Promise<Category[]> {
-    return await this.categoryService.getAllCategoriesWithSubCategories();
+  @Get('/main')
+  async getCategories() {
+    // console.log('hh');
+    return await this.categoryService.getCategories();
   }
+
+  @Get('/sub')
+  async getSubCategories(
+    @Query() getOneQueryRequestDto: GetOneQueryRequestDto,
+  ) {
+    console.log('sub');
+    return await this.categoryService.getSubCategories(getOneQueryRequestDto);
+  }
+
   @Post()
   async createCategory(@Body('name') name: string): Promise<Category> {
     return await this.categoryService.createCategory(name);

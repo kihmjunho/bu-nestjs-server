@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { CreateArtworkRequestDto } from '../dto/createArtwork.request.dto';
+import { CreateArtworkRequestDto } from '../dto-create/createArtwork.request.dto';
 import { ArtworkCreationService } from './artwork.service';
+import { GetArtworkParamResponseDto } from '../dto-response/getArtwork.param.response.dto';
 
 @Controller('creations/artworks')
 export class ArtworkCreationController {
@@ -21,7 +22,8 @@ export class ArtworkCreationController {
   }
 
   @Get('/:id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string): Promise<GetArtworkParamResponseDto> {
+    console.log('artwork', id);
     return await this.artworkCreationService.findOne(id);
   }
 }

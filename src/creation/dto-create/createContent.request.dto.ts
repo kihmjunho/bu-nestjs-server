@@ -1,4 +1,4 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateContentRequestDto {
   @IsNotEmpty()
@@ -6,6 +6,9 @@ export class CreateContentRequestDto {
 
   @IsNotEmpty()
   description: string;
+
+  @IsOptional()
+  thumbnail: string;
 
   @IsNotEmpty()
   categoryId: number;
