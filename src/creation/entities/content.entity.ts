@@ -62,7 +62,7 @@ export class Content {
   @OneToMany(() => CreationImage, (creationImage) => creationImage.content, {
     cascade: ['insert'],
   })
-  creationImages?: CreationImage[];
+  creationImages: CreationImage[];
 
   @Column()
   subCategoryId: number;
@@ -73,7 +73,7 @@ export class Content {
     thumbnailId: string;
     categoryId: number;
     subCategoryId: number;
-    creationImages?: CreationImage[];
+    creationImages: CreationImage[];
   }) {
     if (params) {
       this.title = params.title;

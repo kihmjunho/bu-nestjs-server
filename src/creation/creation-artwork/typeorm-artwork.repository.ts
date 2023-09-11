@@ -26,7 +26,7 @@ export class TypeormArtworkRepository implements ArtworkRepository {
       where: {
         id,
       },
-      relations: ['content'],
+      relations: ['content', 'content.creationImages'],
     });
   }
 }

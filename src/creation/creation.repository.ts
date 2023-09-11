@@ -25,19 +25,17 @@ export class CreationRepository {
       defaultSortBy: [['createdAt', 'DESC']],
     });
 
-    try {
-      return {
-        data: response.data.map((item: Content) => ({
-          id: item.id,
-          title: item.title,
-          thumbnail:
-            item.creationImages !== undefined ? item.creationImages[0].url : '',
-          category: item.category.name,
-          subCategory: item.subCategory.name,
-        })),
-        totalPages: response.meta.totalPages,
-      };
-    } catch (e) {}
+    return {
+      data: response.data.map((item: Content) => ({
+        id: item.id,
+        title: item.title,
+        thumbnail:
+          item.creationImages !== undefined ? item.creationImages[0].url : '',
+        category: item.category.name,
+        subCategory: item.subCategory.name,
+      })),
+      totalPages: response.meta.totalPages,
+    };
   }
 
   public async findBySubCategoryId(
