@@ -36,7 +36,7 @@ export class ArtworkFactory {
       materials,
     } = params;
 
-    const creationImages: CreationImage[] = images.map(
+    const creationImages: CreationImage[] = images?.map(
       (image, index) => new CreationImage(image, index + 1),
     );
 
