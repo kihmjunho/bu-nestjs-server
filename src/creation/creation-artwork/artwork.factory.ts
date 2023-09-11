@@ -6,7 +6,6 @@ import { Content } from '../entities/content.entity';
 interface Params {
   title: string;
   description: string;
-  thumbnailId: string;
   categoryId: number;
   subCategoryId: number;
   width: number;
@@ -25,7 +24,6 @@ export class ArtworkFactory {
       images,
       title,
       description,
-      thumbnailId,
       categoryId,
       subCategoryId,
       year,
@@ -43,7 +41,6 @@ export class ArtworkFactory {
     const content = new Content({
       title,
       description,
-      thumbnailId,
       categoryId,
       subCategoryId,
       creationImages,

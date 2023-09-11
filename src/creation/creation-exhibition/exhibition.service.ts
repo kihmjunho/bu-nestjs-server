@@ -20,7 +20,6 @@ export class ExhibitionCreationService {
     const {
       title,
       description,
-      thumbnailId,
       categoryId,
       subCategoryId,
       year,
@@ -30,7 +29,6 @@ export class ExhibitionCreationService {
     const exhibition = this.exhibitionFactory.create({
       title,
       description,
-      thumbnailId,
       categoryId,
       subCategoryId,
       year,

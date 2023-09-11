@@ -21,7 +21,6 @@ export class PostCreationService {
     const {
       title,
       description,
-      thumbnailId,
       categoryId,
       subCategoryId,
       metaDescription,
@@ -31,7 +30,6 @@ export class PostCreationService {
     const post = this.postFactory.create({
       title,
       description,
-      thumbnailId,
       categoryId,
       subCategoryId,
       metaDescription,

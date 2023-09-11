@@ -6,7 +6,6 @@ import { Exhibition } from '../entities/exhibition.entity';
 interface Params {
   title: string;
   description: string;
-  thumbnailId: string;
   categoryId: number;
   subCategoryId: number;
   year: number;
@@ -21,7 +20,6 @@ export class ExhibitionFactory {
       images,
       title,
       description,
-      thumbnailId,
       categoryId,
       subCategoryId,
       year,
@@ -30,11 +28,9 @@ export class ExhibitionFactory {
     const creationImages: CreationImage[] = images.map(
       (image, index) => new CreationImage(image, index + 1),
     );
-    console.log(creationImages);
     const content = new Content({
       title,
       description,
-      thumbnailId,
       categoryId,
       subCategoryId,
       creationImages,

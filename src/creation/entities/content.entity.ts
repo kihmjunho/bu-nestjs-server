@@ -29,9 +29,6 @@ export class Content {
   @Column()
   description: string;
 
-  @Column()
-  thumbnailId: string;
-
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
@@ -70,7 +67,6 @@ export class Content {
   constructor(params: {
     title: string;
     description: string;
-    thumbnailId: string;
     categoryId: number;
     subCategoryId: number;
     creationImages: CreationImage[];
@@ -78,7 +74,6 @@ export class Content {
     if (params) {
       this.title = params.title;
       this.description = params.description;
-      this.thumbnailId = params.thumbnailId;
       this.categoryId = params.categoryId;
       this.subCategoryId = params.subCategoryId;
       this.creationImages = params.creationImages;
