@@ -7,42 +7,40 @@ import { Post } from '../entities/post.entity';
 import { CommonRepository } from '../common/common.repository';
 import { CreateContentResponseDto } from '../dto-response/createContent.response.dto';
 import { GetPostParamResponseDto } from '../dto-response/getPost.param.response.dto';
+import { PostFactory } from './post.factory';
 
 @Injectable()
 export class PostCreationService {
   constructor(
     @Inject(POST_REPOSITORY)
     private readonly postRepository: PostRepository,
-    private readonly commonRepository: CommonRepository,
+    private readonly postFactory: PostFactory,
   ) {}
 
   async create(createPostRequestDto: CreatePostRequestDto) {
     const {
       title,
       description,
-      thumbnail,
+      thumbnailId,
       categoryId,
       subCategoryId,
       metaDescription,
+      images,
     } = createPostRequestDto;
-    const content = new Content({
+
+    const post = this.postFactory.create({
       title,
       description,
-      thumbnail,
+      thumbnailId,
       categoryId,
       subCategoryId,
+      metaDescription,
+      images,
     });
 
-    const post = new Post({ metaDescription, content });
     const data = await this.postRepository.save(post);
 
-    const name = await this.commonRepository.findCategoryNameById(
-      subCategoryId,
-    );
-
-    const url = `/post/${name}/${data.id}`;
-
-    return new CreateContentResponseDto(url);
+    return new CreateContentResponseDto(data.id);
   }
 
   async findAll() {

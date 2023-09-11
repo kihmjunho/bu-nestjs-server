@@ -21,6 +21,7 @@ export class CreationService {
     }
 
     if (subCategoryName) {
+      console.log(subCategoryName);
       return await this.creationRepository.findBySubCategoryId(
         subCategoryName,
         query,

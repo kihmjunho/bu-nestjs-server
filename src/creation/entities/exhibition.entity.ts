@@ -11,7 +11,7 @@ export class Exhibition {
   year: number;
 
   @Column()
-  date: number;
+  date: string;
 
   @OneToOne(() => Content, (content) => content.exhibition, {
     cascade: ['insert'],
@@ -21,7 +21,7 @@ export class Exhibition {
 
   constructor(params: {
     year: number;
-    date: number;
+    date: string;
     content: Content;
     // materials: string;
     // year: number;

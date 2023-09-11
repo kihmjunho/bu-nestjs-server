@@ -1,7 +1,7 @@
 export class CreateContentResponseDto {
-  url: string;
+  id: string;
 
-  constructor(url: string) {
-    this.url = url;
+  constructor(id: string) {
+    this.id = id;
   }
 }

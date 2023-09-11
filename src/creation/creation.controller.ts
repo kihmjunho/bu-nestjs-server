@@ -12,8 +12,6 @@ export class CreationController {
     @Query() findCreationRequestDto: FindCreationRequestDto,
     @Paginate() query: PaginateQuery,
   ) {
-    // console.log(query);
-    console.log('fetch');
     return await this.creationService.findAll(findCreationRequestDto, query);
   }
 }

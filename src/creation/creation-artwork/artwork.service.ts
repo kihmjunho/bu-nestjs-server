@@ -7,20 +7,22 @@ import { ARTWORK_REPOSITORY } from '../../common/constants/token.constant';
 import { GetArtworkParamResponseDto } from '../dto-response/getArtwork.param.response.dto';
 import { CreateContentResponseDto } from '../dto-response/createContent.response.dto';
 import { CommonRepository } from '../common/common.repository';
+import { ArtworkFactory } from './artwork.factory';
 
 @Injectable()
 export class ArtworkCreationService {
   constructor(
     @Inject(ARTWORK_REPOSITORY)
     private readonly artworkRepository: ArtworkRepository,
-    private readonly commonRepository: CommonRepository,
+    private readonly artworkFactory: ArtworkFactory,
   ) {}
 
   async create(createArtworkRequestDto: CreateArtworkRequestDto) {
+    console.log('--------------');
     const {
       title,
       description,
-      thumbnail,
+      thumbnailId,
       categoryId,
       subCategoryId,
       height,
@@ -29,32 +31,26 @@ export class ArtworkCreationService {
       price,
       collector,
       year,
+      images,
     } = createArtworkRequestDto;
 
-    const content = new Content({
+    const artwork = this.artworkFactory.create({
       title,
       description,
-      thumbnail,
+      thumbnailId,
       categoryId,
       subCategoryId,
-    });
-    const artwork = new Artwork({
       height,
       width,
       materials,
       price,
       collector,
       year,
-      content,
+      images,
     });
     const data = await this.artworkRepository.save(artwork);
 
-    const name = await this.commonRepository.findCategoryNameById(
-      subCategoryId,
-    );
-
-    const url = `/artwork/${name}/${data.id}`;
-    return new CreateContentResponseDto(url);
+    return new CreateContentResponseDto(data.id);
   }
 
   async findAll() {
@@ -65,7 +61,7 @@ export class ArtworkCreationService {
     const response: Artwork | null = await this.artworkRepository.findOneById(
       id,
     );
-
+    console.log(response);
     if (!response) throw new Error('error');
 
     return new GetArtworkParamResponseDto(response);

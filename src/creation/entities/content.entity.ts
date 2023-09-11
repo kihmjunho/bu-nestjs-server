@@ -3,9 +3,12 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
+  RelationId,
   UpdateDateColumn,
 } from 'typeorm';
 import { Category } from '../../category/entities/category.entity';
@@ -13,6 +16,7 @@ import { SubCategory } from '../../category/entities/subCategory.entity';
 import { Artwork } from './artwork.entity';
 import { Exhibition } from './exhibition.entity';
 import { Post } from './post.entity';
+import { CreationImage } from './creationImage.entity';
 
 @Entity()
 export class Content {
@@ -26,7 +30,7 @@ export class Content {
   description: string;
 
   @Column()
-  thumbnail: string;
+  thumbnailId: string;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
@@ -55,22 +59,29 @@ export class Content {
   @ManyToOne(() => SubCategory, (subCategory) => subCategory.contents)
   subCategory: SubCategory;
 
+  @OneToMany(() => CreationImage, (creationImage) => creationImage.content, {
+    cascade: ['insert'],
+  })
+  creationImages?: CreationImage[];
+
   @Column()
   subCategoryId: number;
 
   constructor(params: {
     title: string;
     description: string;
-    thumbnail: string;
+    thumbnailId: string;
     categoryId: number;
     subCategoryId: number;
+    creationImages?: CreationImage[];
   }) {
     if (params) {
       this.title = params.title;
       this.description = params.description;
-      this.thumbnail = params.thumbnail;
+      this.thumbnailId = params.thumbnailId;
       this.categoryId = params.categoryId;
       this.subCategoryId = params.subCategoryId;
+      this.creationImages = params.creationImages;
     }
   }
 }

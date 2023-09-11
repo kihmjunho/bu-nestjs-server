@@ -24,6 +24,9 @@ import { CommonRepository } from './common/common.repository';
 import { PostCreationController } from './creation-post/post.controller';
 import { PostCreationService } from './creation-post/post.service';
 import { TypeormPostRepository } from './creation-post/typeorm-post.repository';
+import { ExhibitionFactory } from './creation-exhibition/exhibition.factory';
+import { ArtworkFactory } from './creation-artwork/artwork.factory';
+import { PostFactory } from './creation-post/post.factory';
 @Module({
   imports: [
     TypeOrmModule.forFeature([
@@ -60,6 +63,9 @@ import { TypeormPostRepository } from './creation-post/typeorm-post.repository';
       provide: POST_REPOSITORY,
       useClass: TypeormPostRepository,
     },
+    ArtworkFactory,
+    ExhibitionFactory,
+    PostFactory,
   ],
 })
 export class CreationModule {}

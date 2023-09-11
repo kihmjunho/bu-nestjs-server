@@ -10,7 +10,7 @@ export class GetArtworkParamResponseDto {
   constructor(artwork: Artwork) {
     this.title = artwork.content.title;
     this.description = artwork.content.description;
-    this.thumbnail = artwork.content.thumbnail;
+    this.thumbnail = artwork.content.thumbnailId;
     this.width = artwork.width;
     this.height = artwork.height;
   }

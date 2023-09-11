@@ -8,6 +8,6 @@ export class GetExhibitionParamResponseDto {
   constructor(exhibition: Exhibition) {
     this.title = exhibition.content.title;
     this.description = exhibition.content.description;
-    this.thumbnail = exhibition.content.thumbnail;
+    this.thumbnail = exhibition.content.thumbnailId;
   }
 }

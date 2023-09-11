@@ -12,7 +12,7 @@ export class UploadController {
 
   @Post()
   @UseInterceptors(FilesInterceptor('images'))
-  uploadSingleFile(@UploadedFiles() images: Array<Express.Multer.File>) {
-    return images;
+  uploadSingleFile(@UploadedFiles() images: Express.MulterS3.File[]) {
+    return images.map((image) => image.location);
   }
 }

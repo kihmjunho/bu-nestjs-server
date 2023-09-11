@@ -6,5 +6,5 @@ export class CreateExhibitionRequestDto extends CreateContentRequestDto {
   year: number;
 
   @IsOptional()
-  date: number;
+  date: string;
 }

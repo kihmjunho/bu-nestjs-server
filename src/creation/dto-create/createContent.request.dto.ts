@@ -8,11 +8,14 @@ export class CreateContentRequestDto {
   description: string;
 
   @IsOptional()
-  thumbnail: string;
+  thumbnailId: string;
 
   @IsNotEmpty()
   categoryId: number;
 
   @IsNotEmpty()
   subCategoryId: number;
+
+  @IsOptional()
+  images: string[];
 }
