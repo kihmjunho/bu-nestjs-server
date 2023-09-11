@@ -29,8 +29,7 @@ export class CreationRepository {
       data: response.data.map((item: Content) => ({
         id: item.id,
         title: item.title,
-        thumbnail:
-          item.creationImages !== undefined ? item.creationImages[0].url : '',
+        thumbnail: item.creationImages[0].url,
         category: item.category.name,
         subCategory: item.subCategory.name,
       })),
@@ -57,8 +56,7 @@ export class CreationRepository {
         data: response.data.map((item: Content) => ({
           id: item.id,
           title: item.title,
-          thumbnail:
-            item.creationImages !== undefined ? item.creationImages[0].url : '',
+          thumbnail: item.creationImages[0].url,
           category: item.category.name,
           subCategory: item.subCategory.name,
         })),
