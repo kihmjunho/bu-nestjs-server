@@ -12,7 +12,6 @@ export class GetArtworkParamResponseDto {
     this.description = artwork.content.description;
     this.thumbnail = artwork.content.creationImages[0].url;
     this.width = artwork.width;
-    ㅊ;
     this.height = artwork.height;
   }
 }

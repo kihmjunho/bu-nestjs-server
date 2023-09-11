@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { CreationRepository } from './creation.repository';
 import { FindCreationRequestDto } from './dto-request/findCreation.request.dto';
-import { PaginateQuery } from 'nestjs-paginate';
+import { Paginated, PaginateQuery } from 'nestjs-paginate';
+import { Content } from './entities/content.entity';
+import { GetCreationsResponseDto } from './dto-response/getCreations.response.dto';
 
 @Injectable()
 export class CreationService {
@@ -14,18 +16,19 @@ export class CreationService {
     const { categoryName, subCategoryName } = findCreationRequestDto;
 
     if (categoryName) {
-      return await this.creationRepository.findByCategoryId(
-        categoryName,
-        query,
-      );
+      const paginatedCreations: Paginated<Content> =
+        await this.creationRepository.findByCategoryName(categoryName, query);
+
+      return new GetCreationsResponseDto(paginatedCreations);
     }
 
     if (subCategoryName) {
-      console.log(subCategoryName);
-      return await this.creationRepository.findBySubCategoryId(
-        subCategoryName,
-        query,
-      );
+      const paginatedCreations: Paginated<Content> =
+        await this.creationRepository.findBySubCategoryName(
+          subCategoryName,
+          query,
+        );
+      return new GetCreationsResponseDto(paginatedCreations);
     }
   }
 }
