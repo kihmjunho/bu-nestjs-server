@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreationImage } from '../entities/creationImage.entity';
 import { Content } from '../entities/content.entity';
-import { Exhibition } from '../entities/exhibition.entity';
+import { Exhibition } from './exhibition.entity';
 
 interface Params {
   title: string;
@@ -11,6 +11,7 @@ interface Params {
   subCategoryId: number;
   year: number;
   date: string;
+  userId: string;
   images: string[];
 }
 
@@ -21,7 +22,7 @@ export class ExhibitionFactory {
       images,
       title,
       description,
-      thumbnailId,
+      userId,
       categoryId,
       subCategoryId,
       year,
@@ -34,9 +35,9 @@ export class ExhibitionFactory {
     const content = new Content({
       title,
       description,
-      thumbnailId,
       categoryId,
       subCategoryId,
+      userId,
       creationImages,
     });
     const exhibition = new Exhibition({ year, date, content });

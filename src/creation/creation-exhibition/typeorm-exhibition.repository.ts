@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ExhibitionRepository } from './exhibition.repository';
-import { Exhibition } from '../entities/exhibition.entity';
-import { Artwork } from '../entities/artwork.entity';
+import { Exhibition } from './exhibition.entity';
+import { Artwork } from '../creation-artwork/artwork.entity';
 
 @Injectable()
 export class TypeormExhibitionRepository implements ExhibitionRepository {
@@ -27,7 +27,7 @@ export class TypeormExhibitionRepository implements ExhibitionRepository {
       where: {
         id,
       },
-      relations: ['content'],
+      relations: ['content', 'content.creationImages'],
     });
   }
 }

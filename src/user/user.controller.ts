@@ -13,6 +13,7 @@ export class UserController {
   async signup(
     @Body() signupUserRequestDto: SignupUserRequestDto,
   ): Promise<SignupUserResponseDto> {
+    console.log(signupUserRequestDto);
     return await this.userService.signup(signupUserRequestDto);
   }
 

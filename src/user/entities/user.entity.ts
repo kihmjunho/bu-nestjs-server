@@ -5,11 +5,13 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { UserRole } from '../userRole';
 import * as bcrypt from 'bcrypt';
+import { Content } from '../../creation/entities/content.entity';
 
 @Entity('users')
 export class User {
@@ -48,6 +50,9 @@ export class User {
 
   @DeleteDateColumn({ type: 'timestamp' })
   deletedAt: Date;
+
+  @OneToMany(() => Content, (content) => content.user)
+  contents: Content[];
 
   constructor(params: {
     email: string;

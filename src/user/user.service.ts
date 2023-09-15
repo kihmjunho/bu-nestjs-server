@@ -63,6 +63,7 @@ export class UserService {
 
     return {
       accessToken,
+      userId: user.id,
     };
   }
 }

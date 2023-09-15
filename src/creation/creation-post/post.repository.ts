@@ -1,4 +1,4 @@
-import { Post } from '../entities/post.entity';
+import { Post } from './post.entity';
 
 export interface PostRepository {
   save(artwork: Post): Promise<Post>;

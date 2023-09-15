@@ -1,4 +1,4 @@
-import { Artwork } from '../entities/artwork.entity';
+import { Artwork } from './artwork.entity';
 
 export interface ArtworkRepository {
   save(artwork: Artwork): Promise<Artwork>;

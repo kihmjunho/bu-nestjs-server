@@ -18,7 +18,6 @@ export class CategoryController {
   async getSubCategories(
     @Query() getOneQueryRequestDto: GetOneQueryRequestDto,
   ) {
-    console.log('sub');
     return await this.categoryService.getSubCategories(getOneQueryRequestDto);
   }
 

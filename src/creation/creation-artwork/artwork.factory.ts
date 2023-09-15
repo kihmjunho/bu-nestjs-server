@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Artwork } from '../entities/artwork.entity';
+import { Artwork } from './artwork.entity';
 import { CreationImage } from '../entities/creationImage.entity';
 import { Content } from '../entities/content.entity';
 
@@ -15,6 +15,7 @@ interface Params {
   collector: string;
   price: number;
   year: number;
+  userId: string;
   images: string[];
 }
 
@@ -25,7 +26,7 @@ export class ArtworkFactory {
       images,
       title,
       description,
-      thumbnailId,
+
       categoryId,
       subCategoryId,
       year,
@@ -34,6 +35,7 @@ export class ArtworkFactory {
       collector,
       price,
       materials,
+      userId,
     } = params;
 
     const creationImages: CreationImage[] = images.map(
@@ -43,10 +45,10 @@ export class ArtworkFactory {
     const content = new Content({
       title,
       description,
-      thumbnailId,
       categoryId,
       subCategoryId,
       creationImages,
+      userId,
     });
 
     return new Artwork({

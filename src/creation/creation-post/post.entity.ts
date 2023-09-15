@@ -1,5 +1,5 @@
 import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
-import { Content } from './content.entity';
+import { Content } from '../entities/content.entity';
 
 @Entity()
 export class Post {

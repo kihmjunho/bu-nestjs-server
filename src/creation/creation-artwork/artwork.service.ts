@@ -1,12 +1,10 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { CreateArtworkRequestDto } from '../dto-create/createArtwork.request.dto';
-import { Artwork } from '../entities/artwork.entity';
-import { Content } from '../entities/content.entity';
+import { Inject, Injectable } from '@nestjs/common';
+import { CreateArtworkRequestDto } from './createArtwork.request.dto';
+import { Artwork } from './artwork.entity';
 import { ArtworkRepository } from './artwork.repository';
 import { ARTWORK_REPOSITORY } from '../../common/constants/token.constant';
-import { GetArtworkParamResponseDto } from '../dto-response/getArtwork.param.response.dto';
+import { GetArtworkParamResponseDto } from './getArtwork.param.response.dto';
 import { CreateContentResponseDto } from '../dto-response/createContent.response.dto';
-import { CommonRepository } from '../common/common.repository';
 import { ArtworkFactory } from './artwork.factory';
 
 @Injectable()
@@ -18,36 +16,7 @@ export class ArtworkCreationService {
   ) {}
 
   async create(createArtworkRequestDto: CreateArtworkRequestDto) {
-    console.log('--------------');
-    const {
-      title,
-      description,
-      thumbnailId,
-      categoryId,
-      subCategoryId,
-      height,
-      width,
-      materials,
-      price,
-      collector,
-      year,
-      images,
-    } = createArtworkRequestDto;
-
-    const artwork = this.artworkFactory.create({
-      title,
-      description,
-      thumbnailId,
-      categoryId,
-      subCategoryId,
-      height,
-      width,
-      materials,
-      price,
-      collector,
-      year,
-      images,
-    });
+    const artwork = this.artworkFactory.create(createArtworkRequestDto);
     const data = await this.artworkRepository.save(artwork);
 
     return new CreateContentResponseDto(data.id);

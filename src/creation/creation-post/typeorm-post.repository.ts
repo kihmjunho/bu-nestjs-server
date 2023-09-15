@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PostRepository } from './post.repository';
-import { Post } from '../entities/post.entity';
+import { Post } from './post.entity';
 
 @Injectable()
 export class TypeormPostRepository implements PostRepository {
@@ -26,7 +26,7 @@ export class TypeormPostRepository implements PostRepository {
       where: {
         id,
       },
-      relations: ['content'],
+      relations: ['content', 'content.creationImages'],
     });
   }
 }

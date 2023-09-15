@@ -1,5 +1,5 @@
 import { ArtworkRepository } from './artwork.repository';
-import { Artwork } from '../entities/artwork.entity';
+import { Artwork } from './artwork.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -26,7 +26,7 @@ export class TypeormArtworkRepository implements ArtworkRepository {
       where: {
         id,
       },
-      relations: ['content'],
+      relations: ['content', 'content.creationImages'],
     });
   }
 }

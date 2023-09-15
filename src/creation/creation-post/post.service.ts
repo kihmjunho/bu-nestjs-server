@@ -1,12 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Content } from '../entities/content.entity';
 import { POST_REPOSITORY } from '../../common/constants/token.constant';
 import { PostRepository } from './post.repository';
-import { CreatePostRequestDto } from '../dto-create/createPost.request.dto';
-import { Post } from '../entities/post.entity';
-import { CommonRepository } from '../common/common.repository';
+import { CreatePostRequestDto } from './createPost.request.dto';
 import { CreateContentResponseDto } from '../dto-response/createContent.response.dto';
-import { GetPostParamResponseDto } from '../dto-response/getPost.param.response.dto';
+import { GetPostParamResponseDto } from './getPost.param.response.dto';
 import { PostFactory } from './post.factory';
 
 @Injectable()
@@ -18,26 +15,7 @@ export class PostCreationService {
   ) {}
 
   async create(createPostRequestDto: CreatePostRequestDto) {
-    const {
-      title,
-      description,
-      thumbnailId,
-      categoryId,
-      subCategoryId,
-      metaDescription,
-      images,
-    } = createPostRequestDto;
-
-    const post = this.postFactory.create({
-      title,
-      description,
-      thumbnailId,
-      categoryId,
-      subCategoryId,
-      metaDescription,
-      images,
-    });
-
+    const post = this.postFactory.create(createPostRequestDto);
     const data = await this.postRepository.save(post);
 
     return new CreateContentResponseDto(data.id);

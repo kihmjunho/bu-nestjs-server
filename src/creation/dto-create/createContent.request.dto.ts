@@ -16,6 +16,9 @@ export class CreateContentRequestDto {
   @IsNotEmpty()
   subCategoryId: number;
 
+  @IsNotEmpty()
+  userId: string;
+
   @IsOptional()
   images: string[];
 }
