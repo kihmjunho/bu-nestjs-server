@@ -28,8 +28,7 @@ export class CommentService {
       },
     });
 
-    const { comments } = new GetCommentsResponseDto(response);
-    return comments;
+    return new GetCommentsResponseDto(response);
   }
 
   async createComment(
