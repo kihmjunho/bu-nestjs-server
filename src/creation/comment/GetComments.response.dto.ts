@@ -1,5 +1,6 @@
 import { Comment } from './comment.entity';
 import { Reply } from './reply.entity';
+
 export class GetCommentsResponseDto {
   comments: {
     id: string;
@@ -23,15 +24,13 @@ export class GetCommentsResponseDto {
       userId: item.userId,
       nickname: item.user.nickname,
       createdAt: item.createdAt,
-      replies: item.replies
-        .map((item: Reply) => ({
-          id: item.id,
-          reply: item.reply,
-          userId: item.userId,
-          nickname: item.user.nickname,
-          createdAt: item.createdAt,
-        }))
-        .sort((a: any, b: any) => a.createdAt - b.createdAt),
+      replies: item.replies.map((item: Reply) => ({
+        id: item.id,
+        reply: item.reply,
+        userId: item.userId,
+        nickname: item.user.nickname,
+        createdAt: item.createdAt,
+      })),
     }));
   }
 }

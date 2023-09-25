@@ -1,6 +1,5 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Artwork } from '../creation-artwork/artwork.entity';
 import { Comment } from './comment.entity';
 import { Repository } from 'typeorm';
 import { CreateCommentRequestDto } from './createComment.request.dto';
@@ -21,7 +20,12 @@ export class CommentService {
     const response = await this.commentRepository.find({
       relations: ['user', 'replies', 'replies.user'],
       where: { contentId: id },
-      order: { createdAt: 'ASC' },
+      order: {
+        createdAt: 'ASC',
+        replies: {
+          createdAt: 'ASC',
+        },
+      },
     });
 
     const { comments } = new GetCommentsResponseDto(response);
