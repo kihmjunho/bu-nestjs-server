@@ -8,7 +8,6 @@ export class PostCreationController {
 
   @Post()
   async createPost(@Body() createPostRequestDto: CreatePostRequestDto) {
-    console.log('hh');
     return await this.postCreationService.create(createPostRequestDto);
   }
 

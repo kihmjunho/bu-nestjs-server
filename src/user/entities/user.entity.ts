@@ -12,6 +12,8 @@ import {
 import { UserRole } from '../userRole';
 import * as bcrypt from 'bcrypt';
 import { Content } from '../../creation/entities/content.entity';
+import { Comment } from '../../creation/comment/comment.entity';
+import { Reply } from '../../creation/comment/reply.entity';
 
 @Entity('users')
 export class User {
@@ -53,6 +55,12 @@ export class User {
 
   @OneToMany(() => Content, (content) => content.user)
   contents: Content[];
+
+  @OneToMany(() => Comment, (comment) => comment.user)
+  comment: Comment[];
+
+  @OneToMany(() => Reply, (reply) => reply.user)
+  reply: Reply[];
 
   constructor(params: {
     email: string;

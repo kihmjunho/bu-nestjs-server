@@ -5,11 +5,13 @@ export function extractCommonProperties(content: Content): {
   description: string;
   thumbnail: string;
   images: { url: string; seq: number }[];
+  subCategoryId: number;
 } {
   const title = content.title;
   const description = content.description;
   let thumbnail = '';
   const images: { url: string; seq: number }[] = [];
+  const subCategoryId = content.subCategoryId;
 
   content.creationImages.forEach((item) => {
     if (item.seq === 1) {
@@ -21,5 +23,5 @@ export function extractCommonProperties(content: Content): {
 
   images.sort((a, b) => a.seq - b.seq);
 
-  return { title, description, thumbnail, images };
+  return { title, description, thumbnail, images, subCategoryId };
 }

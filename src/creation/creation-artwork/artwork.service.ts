@@ -6,6 +6,7 @@ import { ARTWORK_REPOSITORY } from '../../common/constants/token.constant';
 import { GetArtworkParamResponseDto } from './getArtwork.param.response.dto';
 import { CreateContentResponseDto } from '../dto-response/createContent.response.dto';
 import { ArtworkFactory } from './artwork.factory';
+import { UpdateArtworkRequestDto } from './updateArtwork.request.dto';
 
 @Injectable()
 export class ArtworkCreationService {
@@ -30,9 +31,20 @@ export class ArtworkCreationService {
     const response: Artwork | null = await this.artworkRepository.findOneById(
       id,
     );
-    console.log(response);
-    if (!response) throw new Error('error');
+
+    if (!response) {
+      throw new Error('error');
+    }
 
     return new GetArtworkParamResponseDto(response);
+  }
+
+  async update(id: string, updateArtworkRequestDto: UpdateArtworkRequestDto) {
+    return await this.artworkRepository.update(id, updateArtworkRequestDto);
+  }
+
+  async deleteArtwork(id: string) {
+    console.log('service', id);
+    return await this.artworkRepository.delete(id);
   }
 }

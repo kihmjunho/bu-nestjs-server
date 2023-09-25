@@ -13,6 +13,9 @@ export class GetArtworkParamResponseDto {
   height: number;
   materials: string;
   year: number;
+  price: number;
+  collector: string;
+  subCategoryId: number;
 
   constructor(artwork: Artwork) {
     const commonProperties = extractCommonProperties(artwork.content);
@@ -25,5 +28,8 @@ export class GetArtworkParamResponseDto {
     this.height = artwork.height;
     this.materials = artwork.materials;
     this.year = artwork.year;
+    this.price = artwork.price;
+    this.collector = artwork.collector;
+    this.subCategoryId = commonProperties.subCategoryId;
   }
 }

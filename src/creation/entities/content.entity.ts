@@ -18,6 +18,8 @@ import { Exhibition } from '../creation-exhibition/exhibition.entity';
 import { Post } from '../creation-post/post.entity';
 import { CreationImage } from './creationImage.entity';
 import { User } from '../../user/entities/user.entity';
+import { Comment } from '../comment/comment.entity';
+import { Reply } from '../comment/reply.entity';
 
 @Entity()
 export class Content {
@@ -70,6 +72,12 @@ export class Content {
 
   @Column()
   userId: string;
+
+  @OneToMany(() => Comment, (comment) => comment.content)
+  comment: Comment[];
+
+  @OneToMany(() => Reply, (reply) => reply.content)
+  reply: Reply[];
 
   constructor(params: {
     title: string;

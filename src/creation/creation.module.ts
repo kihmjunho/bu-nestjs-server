@@ -6,6 +6,7 @@ import { Category } from '../category/entities/category.entity';
 import { SubCategory } from '../category/entities/subCategory.entity';
 import { Exhibition } from './creation-exhibition/exhibition.entity';
 import { Post } from './creation-post/post.entity';
+import { Comment } from './comment/comment.entity';
 import { ArtworkCreationService } from './creation-artwork/artwork.service';
 import { ArtworkCreationController } from './creation-artwork/artwork.controller';
 import { TypeormArtworkRepository } from './creation-artwork/typeorm-artwork.repository';
@@ -26,6 +27,9 @@ import { TypeormPostRepository } from './creation-post/typeorm-post.repository';
 import { ExhibitionFactory } from './creation-exhibition/exhibition.factory';
 import { ArtworkFactory } from './creation-artwork/artwork.factory';
 import { PostFactory } from './creation-post/post.factory';
+import { CommentService } from './comment/comment.service';
+import { Reply } from './comment/reply.entity';
+import { CommentController } from './comment/comment.controller';
 @Module({
   imports: [
     TypeOrmModule.forFeature([
@@ -35,6 +39,8 @@ import { PostFactory } from './creation-post/post.factory';
       Category,
       SubCategory,
       Post,
+      Comment,
+      Reply,
     ]),
   ],
   controllers: [
@@ -42,6 +48,7 @@ import { PostFactory } from './creation-post/post.factory';
     ArtworkCreationController,
     ExhibitionCreationController,
     PostCreationController,
+    CommentController,
   ],
   providers: [
     CreationService,
@@ -49,6 +56,7 @@ import { PostFactory } from './creation-post/post.factory';
     ArtworkCreationService,
     ExhibitionCreationService,
     PostCreationService,
+    CommentService,
     {
       provide: ARTWORK_REPOSITORY,
       useClass: TypeormArtworkRepository,

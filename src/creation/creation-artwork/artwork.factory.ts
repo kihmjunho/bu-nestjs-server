@@ -26,7 +26,6 @@ export class ArtworkFactory {
       images,
       title,
       description,
-
       categoryId,
       subCategoryId,
       year,

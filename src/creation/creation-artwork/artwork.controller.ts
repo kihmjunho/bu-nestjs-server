@@ -1,12 +1,25 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { CreateArtworkRequestDto } from './createArtwork.request.dto';
 import { ArtworkCreationService } from './artwork.service';
 import { GetArtworkParamResponseDto } from './getArtwork.param.response.dto';
+import { CreateCommentRequestDto } from '../comment/createComment.request.dto';
+import { CommentService } from '../comment/comment.service';
+import { CreateReplyRequestDto } from '../comment/createReply.request.dto';
+import { UpdateArtworkRequestDto } from './updateArtwork.request.dto';
 
 @Controller('creations/artworks')
 export class ArtworkCreationController {
   constructor(
     private readonly artworkCreationService: ArtworkCreationService,
+    private readonly commentService: CommentService,
   ) {}
 
   @Post()
@@ -23,13 +36,23 @@ export class ArtworkCreationController {
 
   @Get('/:id')
   async findOne(@Param('id') id: string): Promise<GetArtworkParamResponseDto> {
-    // console.log('artwork', id);
     return await this.artworkCreationService.findOne(id);
   }
 
-  @Get('/:id/comments')
-  async getComments(@Param('id') id: string) {
-    // console.log('artwork comment', id);
-    return await this.artworkCreationService.findOne(id);
+  @Put('/:id')
+  async updateArtwork(
+    @Param('id') id: string,
+    @Body() updateArtworkRequestDto: UpdateArtworkRequestDto,
+  ) {
+    return await this.artworkCreationService.update(
+      id,
+      updateArtworkRequestDto,
+    );
+  }
+
+  @Delete('/:id')
+  async deleteArtwork(@Param('id') id: string) {
+    console.log('controller', id);
+    return this.artworkCreationService.deleteArtwork(id);
   }
 }
