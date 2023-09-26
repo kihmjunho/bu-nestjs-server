@@ -28,18 +28,24 @@ export class CommentService {
     return comments;
   }
 
-  async createComment(
-    id: string,
-    createCommentRequestDto: CreateCommentRequestDto,
-  ) {
-    const { comment, userId } = createCommentRequestDto;
+  async createComment(createCommentRequestDto: CreateCommentRequestDto) {
+    const { comment, contentId, parentId, userId } = createCommentRequestDto;
 
     const commentCreate = new Comment({
       comment,
       userId,
-      contentId: id,
+      contentId,
     });
-
+    // if (parentId) {
+    //   const parentComment = await this.commentRepository.findOne({
+    //     where: {
+    //       parentId,
+    //     },
+    //   });
+    //   if (parentComment) {
+    //     commentCreate.parentId = parentComment.id;
+    //   }
+    // }
     return await this.commentRepository.save(commentCreate);
   }
 

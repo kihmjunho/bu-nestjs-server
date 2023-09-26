@@ -12,12 +12,11 @@ export class CommentController {
     return await this.commentService.getComment(id);
   }
 
-  @Post('/:id')
+  @Post()
   async createComment(
-    @Param('id') id: string,
     @Body() createCommentRequestDto: CreateCommentRequestDto,
   ) {
-    return await this.commentService.createComment(id, createCommentRequestDto);
+    return await this.commentService.createComment(createCommentRequestDto);
   }
 
   @Post('/:id/reply')

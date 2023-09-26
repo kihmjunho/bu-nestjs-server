@@ -8,6 +8,13 @@ import { GetOneQueryRequestDto } from './dto/getOne.query.request.dto';
 export class CategoryController {
   constructor(private categoryService: CategoryService) {}
 
+  @Get('/')
+  async get() {
+    return;
+    // console.log('hh');
+    // return await this.categoryService.getCategories();
+  }
+
   @Get('/main')
   async getCategories() {
     // console.log('hh');

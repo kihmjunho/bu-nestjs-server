@@ -5,5 +5,11 @@ export class CreateCommentRequestDto {
   comment: string;
 
   @IsOptional()
+  contentId: string;
+
+  @IsOptional()
+  parentId: string;
+
+  @IsOptional()
   userId: string;
 }

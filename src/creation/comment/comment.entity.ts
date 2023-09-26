@@ -44,8 +44,8 @@ export class Comment {
   @Column()
   contentId: string;
 
-  @OneToMany(() => Reply, (reply) => reply.comment)
-  replies: Reply[];
+  @OneToMany(() => Comment, (comment) => comment.replies)
+  replies: Comment[];
 
   constructor(params: { comment: string; userId: string; contentId: string }) {
     if (params) {
