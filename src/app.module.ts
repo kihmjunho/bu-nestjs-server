@@ -6,6 +6,7 @@ import { JwtAuthModule } from './config/jwt/jwtAuth.module';
 import { CategoryModule } from './category/category.module';
 import { CreationModule } from './creation/creation.module';
 import { UploadModule } from './upload/upload.module';
+import { GuestModule } from './guest/guest.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { UploadModule } from './upload/upload.module';
     CategoryModule,
     CreationModule,
     UploadModule,
+    GuestModule,
   ],
   controllers: [],
   providers: [],
