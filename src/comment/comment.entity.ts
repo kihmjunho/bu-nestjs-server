@@ -3,17 +3,12 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  JoinColumn,
   ManyToOne,
-  OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
-  RelationId,
   UpdateDateColumn,
 } from 'typeorm';
-import { User } from '../../user/entities/user.entity';
-import { Content } from '../entities/content.entity';
-import { Reply } from './reply.entity';
+import { Content } from '../creation/entities/content.entity';
+import { User } from '../user/entities/user.entity';
 
 @Entity()
 export class Comment {
@@ -43,9 +38,6 @@ export class Comment {
 
   @Column()
   contentId: string;
-
-  @OneToMany(() => Reply, (reply) => reply.comment)
-  replies: Reply[];
 
   constructor(params: { comment: string; userId: string; contentId: string }) {
     if (params) {

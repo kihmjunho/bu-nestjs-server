@@ -10,16 +10,12 @@ import {
 import { CreateArtworkRequestDto } from './createArtwork.request.dto';
 import { ArtworkCreationService } from './artwork.service';
 import { GetArtworkParamResponseDto } from './getArtwork.param.response.dto';
-import { CreateCommentRequestDto } from '../comment/createComment.request.dto';
-import { CommentService } from '../comment/comment.service';
-import { CreateReplyRequestDto } from '../comment/createReply.request.dto';
 import { UpdateArtworkRequestDto } from './updateArtwork.request.dto';
 
 @Controller('creations/artworks')
 export class ArtworkCreationController {
   constructor(
     private readonly artworkCreationService: ArtworkCreationService,
-    private readonly commentService: CommentService,
   ) {}
 
   @Post()
