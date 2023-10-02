@@ -1,9 +1,15 @@
-import { IsOptional } from 'class-validator';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateCommentRequestDto {
-  @IsOptional()
+  @IsNotEmpty()
   comment: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   userId: string;
+
+  @IsNotEmpty()
+  contentId: string;
+
+  @IsOptional()
+  commentParentId: string;
 }

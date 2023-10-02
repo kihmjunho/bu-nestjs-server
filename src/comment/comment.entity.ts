@@ -39,11 +39,23 @@ export class Comment {
   @Column()
   contentId: string;
 
-  constructor(params: { comment: string; userId: string; contentId: string }) {
+  @ManyToOne(() => Comment)
+  parent: Comment;
+
+  @Column({ nullable: true })
+  parentId?: string;
+
+  constructor(params: {
+    comment: string;
+    userId: string;
+    contentId: string;
+    parentId?: string;
+  }) {
     if (params) {
       this.comment = params.comment;
       this.userId = params.userId;
       this.contentId = params.contentId;
+      this.parentId = params.parentId;
     }
   }
 }
