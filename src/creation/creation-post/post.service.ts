@@ -5,6 +5,7 @@ import { CreatePostRequestDto } from './createPost.request.dto';
 import { CreateContentResponseDto } from '../dto-response/createContent.response.dto';
 import { GetPostParamResponseDto } from './getPost.param.response.dto';
 import { PostFactory } from './post.factory';
+import { CreationImage } from '../entities/creationImage.entity';
 
 @Injectable()
 export class PostCreationService {
@@ -26,7 +27,28 @@ export class PostCreationService {
   }
 
   async findOne(id: string) {
-    const response = await this.postRepository.findOneById(id);
+    const post = await this.postRepository.findOneById(id);
+    if (!post) {
+      throw new Error();
+    }
+    let thumbnail;
+    const images: CreationImage[] = [];
+    for (const item of post.content.creationImages) {
+      if (item.seq === 1) {
+        thumbnail = item.url;
+      } else {
+        images.push(item);
+      }
+    }
+
+    const response = {
+      ...post,
+      content: {
+        ...post.content,
+        thumbnail,
+        images,
+      },
+    };
 
     if (response) {
       return new GetPostParamResponseDto(response);

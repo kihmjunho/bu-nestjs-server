@@ -1,5 +1,3 @@
-import { Content } from '../entities/content.entity';
-
 export class GetCommonParamsResponseDto {
   title: string;
   description: string;
@@ -8,17 +6,12 @@ export class GetCommonParamsResponseDto {
   subCategoryId: number;
   userId: string;
 
-  constructor(content: Content) {
+  constructor(content) {
     this.title = content.title;
     this.description = content.description;
 
-    for (const item of content.creationImages) {
-      if (item.seq === 1) {
-        this.thumbnail = item.url;
-      } else {
-        this.images.push(item);
-      }
-    }
+    this.thumbnail = content.thumbnail;
+    this.images = content.images;
 
     this.subCategoryId = content.subCategoryId;
     this.userId = content.userId;
