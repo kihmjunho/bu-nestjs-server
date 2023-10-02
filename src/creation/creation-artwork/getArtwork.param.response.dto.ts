@@ -1,5 +1,5 @@
 import { Artwork } from './artwork.entity';
-import { extractCommonProperties } from '../common/common.helper';
+import { GetCommonParamsResponseDto } from '../dto-response/getCommon.params.response.dto';
 
 export class GetArtworkParamResponseDto {
   title: string;
@@ -16,9 +16,10 @@ export class GetArtworkParamResponseDto {
   price: number;
   collector: string;
   subCategoryId: number;
+  userId: string;
 
   constructor(artwork: Artwork) {
-    const commonProperties = extractCommonProperties(artwork.content);
+    const commonProperties = new GetCommonParamsResponseDto(artwork.content);
 
     this.title = commonProperties.title;
     this.description = commonProperties.description;
@@ -31,5 +32,6 @@ export class GetArtworkParamResponseDto {
     this.price = artwork.price;
     this.collector = artwork.collector;
     this.subCategoryId = commonProperties.subCategoryId;
+    this.userId = commonProperties.userId;
   }
 }

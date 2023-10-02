@@ -60,8 +60,6 @@ export class TypeormArtworkRepository implements ArtworkRepository {
 
     await this.contentRepository.manager.transaction(async (manager) => {
       await manager.save(content);
-    });
-    await this.artworkRepository.manager.transaction(async (manager) => {
       await manager.save(artwork);
     });
   }

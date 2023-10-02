@@ -21,7 +21,12 @@ export class CommentService {
     const response = await this.commentRepository.find({
       relations: ['user', 'replies', 'replies.user'],
       where: { contentId: id },
-      order: { createdAt: 'ASC' },
+      order: {
+        createdAt: 'ASC',
+        replies: {
+          createdAt: 'ASC',
+        },
+      },
     });
 
     const { comments } = new GetCommentsResponseDto(response);

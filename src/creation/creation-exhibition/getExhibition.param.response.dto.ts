@@ -1,5 +1,5 @@
 import { Exhibition } from './exhibition.entity';
-import { extractCommonProperties } from '../common/common.helper';
+import { GetCommonParamsResponseDto } from '../dto-response/getCommon.params.response.dto';
 
 export class GetExhibitionParamResponseDto {
   title: string;
@@ -10,13 +10,15 @@ export class GetExhibitionParamResponseDto {
     seq: number;
   }[];
   year: number;
+  userId: string;
 
   constructor(exhibition: Exhibition) {
-    const commonProperties = extractCommonProperties(exhibition.content);
+    const commonProperties = new GetCommonParamsResponseDto(exhibition.content);
     this.title = commonProperties.title;
     this.description = commonProperties.description;
     this.thumbnail = commonProperties.thumbnail;
     this.images = commonProperties.images;
     this.year = exhibition.year;
+    this.userId = commonProperties.userId;
   }
 }

@@ -18,7 +18,6 @@ export class PostCreationController {
 
   @Get('/:id')
   async findOne(@Param('id') id: string) {
-    console.log('post');
     return await this.postCreationService.findOne(id);
   }
 }
