@@ -4,6 +4,7 @@ import {
   DeleteDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -39,8 +40,11 @@ export class Comment {
   @Column()
   contentId: string;
 
-  @ManyToOne(() => Comment)
+  @ManyToOne(() => Comment, (comment) => comment.children)
   parent: Comment;
+
+  @OneToMany(() => Comment, (comment) => comment.parent)
+  children: Comment[];
 
   @Column({ nullable: true })
   parentId?: string;

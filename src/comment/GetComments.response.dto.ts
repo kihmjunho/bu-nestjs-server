@@ -4,18 +4,39 @@ export class GetCommentsResponseDto {
   comments: {
     id: string;
     comment: string;
-    userId: string;
-    nickname: string;
+    user: {
+      id: string;
+      nickname: string;
+    };
     createdAt: Date;
+    children: {
+      id: string;
+      comment: string;
+      user: {
+        id: string;
+        nickname: string;
+      };
+    }[];
   }[];
 
   constructor(comment: Comment[]) {
     this.comments = comment.map((item: Comment) => ({
       id: item.id,
       comment: item.comment,
-      userId: item.userId,
-      nickname: item.user.nickname,
+      user: {
+        id: item.userId,
+        nickname: item.user.nickname,
+      },
       createdAt: item.createdAt,
+      children: item.children.map((comment) => {
+        return {
+          ...comment,
+          user: {
+            id: comment.userId,
+            nickname: comment.user.nickname,
+          },
+        };
+      }),
     }));
   }
 }
