@@ -11,27 +11,26 @@ interface Params {
   subCategoryId: number;
   year: number;
   date: string;
-  userId: string;
   images: string[];
 }
 
 @Injectable()
 export class ExhibitionFactory {
-  create(params: Params): Exhibition {
+  create(params: Params, userId: string): Exhibition {
     const {
       images,
       title,
       description,
-      userId,
       categoryId,
       subCategoryId,
       year,
       date,
     } = params;
+
     const creationImages: CreationImage[] = images.map(
       (image, index) => new CreationImage(image, index + 1),
     );
-    console.log(creationImages);
+
     const content = new Content({
       title,
       description,
@@ -40,7 +39,6 @@ export class ExhibitionFactory {
       userId,
       creationImages,
     });
-    const exhibition = new Exhibition({ year, date, content });
-    return exhibition;
+    return new Exhibition({ year, date, content });
   }
 }

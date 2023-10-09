@@ -6,27 +6,32 @@ import {
   Param,
   Post,
   Put,
+  Request,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateArtworkRequestDto } from './createArtwork.request.dto';
 import { ArtworkCreationService } from './artwork.service';
 import { GetArtworkParamResponseDto } from './getArtwork.param.response.dto';
-import { CreateCommentRequestDto } from '../comment/createComment.request.dto';
-import { CommentService } from '../comment/comment.service';
-import { CreateReplyRequestDto } from '../comment/createReply.request.dto';
 import { UpdateArtworkRequestDto } from './updateArtwork.request.dto';
+import { JwtAuthGuard } from '../../config/jwt/jwtAuth.guard';
 
 @Controller('creations/artworks')
 export class ArtworkCreationController {
   constructor(
     private readonly artworkCreationService: ArtworkCreationService,
-    private readonly commentService: CommentService,
   ) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   async createArtwork(
+    @Request() req: any,
     @Body() createArtworkRequestDto: CreateArtworkRequestDto,
   ) {
-    return await this.artworkCreationService.create(createArtworkRequestDto);
+    const { id } = req.user;
+    return await this.artworkCreationService.create(
+      createArtworkRequestDto,
+      id,
+    );
   }
 
   @Get()

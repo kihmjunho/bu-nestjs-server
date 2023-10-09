@@ -14,9 +14,13 @@ export class ExhibitionCreationService {
     private readonly exhibitionFactory: ExhibitionFactory,
   ) {}
 
-  async create(createExhibitionRequestDto: CreateExhibitionRequestDto) {
+  async create(
+    createExhibitionRequestDto: CreateExhibitionRequestDto,
+    userId: string,
+  ) {
     const exhibition = this.exhibitionFactory.create(
       createExhibitionRequestDto,
+      userId,
     );
     const data = await this.exhibitionRepository.save(exhibition);
 

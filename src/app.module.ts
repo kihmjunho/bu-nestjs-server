@@ -7,6 +7,7 @@ import { CategoryModule } from './category/category.module';
 import { CreationModule } from './creation/creation.module';
 import { UploadModule } from './upload/upload.module';
 import { GuestModule } from './guest/guest.module';
+import { CommentModule } from './comment/comment.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { GuestModule } from './guest/guest.module';
     CreationModule,
     UploadModule,
     GuestModule,
+    CommentModule,
   ],
   controllers: [],
   providers: [],

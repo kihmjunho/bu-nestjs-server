@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Request } from '@nestjs/common';
 import { ExhibitionCreationService } from './exhibition.service';
 import { CreateExhibitionRequestDto } from './createExhibition.request.dto';
 
@@ -9,11 +9,14 @@ export class ExhibitionCreationController {
   ) {}
 
   @Post()
-  async createArtwork(
+  async createExhibition(
+    @Request() req: any,
     @Body() createExhibitionRequestDto: CreateExhibitionRequestDto,
   ) {
+    const { id } = req.user;
     return await this.exhibitionCreationService.create(
       createExhibitionRequestDto,
+      id,
     );
   }
 

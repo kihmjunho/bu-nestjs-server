@@ -16,8 +16,11 @@ export class ArtworkCreationService {
     private readonly artworkFactory: ArtworkFactory,
   ) {}
 
-  async create(createArtworkRequestDto: CreateArtworkRequestDto) {
-    const artwork = this.artworkFactory.create(createArtworkRequestDto);
+  async create(
+    createArtworkRequestDto: CreateArtworkRequestDto,
+    userId: string,
+  ) {
+    const artwork = this.artworkFactory.create(createArtworkRequestDto, userId);
     const data = await this.artworkRepository.save(artwork);
 
     return new CreateContentResponseDto(data.id);

@@ -9,19 +9,17 @@ interface Params {
   categoryId: number;
   subCategoryId: number;
   metaDescription: string;
-  userId: string;
   images: string[];
 }
 @Injectable()
 export class PostFactory {
-  create(params: Params): Post {
+  create(params: Params, userId: string): Post {
     const {
       title,
       description,
       categoryId,
       subCategoryId,
       metaDescription,
-      userId,
       images,
     } = params;
 

@@ -38,13 +38,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         'NOT_EXISTING_USER_IN_TOKEN',
       );
     }
-
-    if (user.role !== UserRole.ADMIN) {
-      throw new ForbiddenException(
-        '접근 권한이 없습니다.',
-        'ONLY_USER_CAN_ACCESS',
-      );
-    }
+    //
+    // if (user.role !== UserRole.ADMIN) {
+    //   throw new ForbiddenException(
+    //     '접근 권한이 없습니다.',
+    //     'ONLY_USER_CAN_ACCESS',
+    //   );
+    // }
 
     return user;
   }

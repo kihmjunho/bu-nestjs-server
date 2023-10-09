@@ -22,7 +22,7 @@ export class Artwork {
   @Column()
   price: number;
 
-  @Column()
+  @Column({ nullable: true })
   collector: string;
 
   @OneToOne(() => Content, (content) => content.artwork, {
