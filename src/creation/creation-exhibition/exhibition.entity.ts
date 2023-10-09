@@ -8,10 +8,31 @@ export class Exhibition {
   id: string;
 
   @Column()
+  location: string;
+
+  @Column()
+  city: string;
+
+  @Column()
   year: number;
 
   @Column()
-  date: string;
+  start: string;
+
+  @Column()
+  end: string;
+
+  @Column()
+  prefaceTitle: string;
+
+  @Column()
+  prefaceAuthor: string;
+
+  @Column()
+  prefaceDescription: string;
+
+  @Column()
+  etc: string;
 
   @OneToOne(() => Content, (content) => content.exhibition, {
     cascade: ['insert'],
@@ -20,17 +41,27 @@ export class Exhibition {
   content: Content;
 
   constructor(params: {
+    location: string;
+    city: string;
     year: number;
-    date: string;
+    start: string;
+    end: string;
+    prefaceTitle: string;
+    prefaceAuthor: string;
+    prefaceDescription: string;
+    etc: string;
     content: Content;
-    // materials: string;
-    // year: number;
-    // price: number;
-    // collector: string;
   }) {
     if (params) {
+      this.location = params.location;
+      this.city = params.city;
       this.year = params.year;
-      this.date = params.date;
+      this.start = params.start;
+      this.end = params.end;
+      this.prefaceTitle = params.prefaceTitle;
+      this.prefaceAuthor = params.prefaceAuthor;
+      this.prefaceDescription = params.prefaceDescription;
+      this.etc = params.etc;
       this.content = params.content;
       // this.materials = params.materials;
       // this.year = params.year;

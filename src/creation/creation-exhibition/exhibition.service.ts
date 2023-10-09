@@ -18,17 +18,17 @@ export class ExhibitionCreationService {
     createExhibitionRequestDto: CreateExhibitionRequestDto,
     userId: string,
   ) {
-    const exhibition = this.exhibitionFactory.create(
-      createExhibitionRequestDto,
+    const exhibition = this.exhibitionFactory.create({
+      ...createExhibitionRequestDto,
       userId,
-    );
+    });
     const data = await this.exhibitionRepository.save(exhibition);
 
     return new CreateContentResponseDto(data.id);
   }
 
-  async findAll() {
-    return await this.exhibitionRepository.findAll();
+  async findByCategoryName(categoryName: string) {
+    return await this.exhibitionRepository.findByCategoryName(categoryName);
   }
 
   async findOne(id: string) {

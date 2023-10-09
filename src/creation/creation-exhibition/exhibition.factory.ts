@@ -9,22 +9,38 @@ interface Params {
   thumbnailId: string;
   categoryId: number;
   subCategoryId: number;
+  location: string;
+  city: string;
   year: number;
-  date: string;
+  start: string;
+  end: string;
+  prefaceTitle: string;
+  prefaceAuthor: string;
+  prefaceDescription: string;
+  etc: string;
   images: string[];
+  userId: string;
 }
 
 @Injectable()
 export class ExhibitionFactory {
-  create(params: Params, userId: string): Exhibition {
+  create(params: Params): Exhibition {
     const {
       images,
       title,
       description,
       categoryId,
       subCategoryId,
+      location,
+      city,
       year,
-      date,
+      start,
+      end,
+      prefaceTitle,
+      prefaceAuthor,
+      prefaceDescription,
+      etc,
+      userId,
     } = params;
 
     const creationImages: CreationImage[] = images.map(
@@ -39,6 +55,18 @@ export class ExhibitionFactory {
       userId,
       creationImages,
     });
-    return new Exhibition({ year, date, content });
+
+    return new Exhibition({
+      location,
+      city,
+      year,
+      start,
+      end,
+      prefaceTitle,
+      prefaceAuthor,
+      prefaceDescription,
+      etc,
+      content,
+    });
   }
 }

@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ExhibitionRepository } from './exhibition.repository';
 import { Exhibition } from './exhibition.entity';
-import { Artwork } from '../creation-artwork/artwork.entity';
 
 @Injectable()
 export class TypeormExhibitionRepository implements ExhibitionRepository {
@@ -16,9 +15,16 @@ export class TypeormExhibitionRepository implements ExhibitionRepository {
     return await this.exhibitionRepository.save(exhibition);
   }
 
-  async findAll(): Promise<Exhibition[]> {
+  async findByCategoryName(name: string): Promise<Exhibition[]> {
     return await this.exhibitionRepository.find({
-      relations: ['content'],
+      where: {
+        content: {
+          subCategory: {
+            name,
+          },
+        },
+      },
+      relations: ['content', 'content.subCategory'],
     });
   }
 

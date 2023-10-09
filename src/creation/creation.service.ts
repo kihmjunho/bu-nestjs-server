@@ -14,8 +14,10 @@ export class CreationService {
     query: PaginateQuery,
   ): Promise<GetCreationsResponseDto> {
     const { name } = findByNameRequestDto;
+
     const paginatedCreations: Paginated<Content> =
       await this.creationRepository.findByCategory(name, query);
+
     return new GetCreationsResponseDto(paginatedCreations);
   }
 

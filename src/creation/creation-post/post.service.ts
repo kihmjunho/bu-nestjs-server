@@ -15,7 +15,7 @@ export class PostCreationService {
   ) {}
 
   async create(createPostRequestDto: CreatePostRequestDto, userId: string) {
-    const post = this.postFactory.create(createPostRequestDto, userId);
+    const post = this.postFactory.create({ ...createPostRequestDto, userId });
     const data = await this.postRepository.save(post);
 
     return new CreateContentResponseDto(data.id);

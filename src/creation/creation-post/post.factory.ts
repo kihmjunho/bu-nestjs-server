@@ -10,10 +10,11 @@ interface Params {
   subCategoryId: number;
   metaDescription: string;
   images: string[];
+  userId: string;
 }
 @Injectable()
 export class PostFactory {
-  create(params: Params, userId: string): Post {
+  create(params: Params): Post {
     const {
       title,
       description,
@@ -21,6 +22,7 @@ export class PostFactory {
       subCategoryId,
       metaDescription,
       images,
+      userId,
     } = params;
 
     const creationImages: CreationImage[] = images.map(

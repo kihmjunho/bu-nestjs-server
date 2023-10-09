@@ -16,11 +16,12 @@ interface Params {
   price: number;
   year: number;
   images: string[];
+  userId: string;
 }
 
 @Injectable()
 export class ArtworkFactory {
-  create(params: Params, userId: string): Artwork {
+  create(params: Params): Artwork {
     const {
       images,
       title,
@@ -33,6 +34,7 @@ export class ArtworkFactory {
       collector,
       price,
       materials,
+      userId,
     } = params;
 
     const creationImages: CreationImage[] = images.map(

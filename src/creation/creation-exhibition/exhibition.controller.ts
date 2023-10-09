@@ -1,6 +1,16 @@
-import { Body, Controller, Get, Param, Post, Request } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { ExhibitionCreationService } from './exhibition.service';
 import { CreateExhibitionRequestDto } from './createExhibition.request.dto';
+import { JwtAuthGuard } from '../../config/jwt/jwtAuth.guard';
 
 @Controller('creations/exhibitions')
 export class ExhibitionCreationController {
@@ -9,6 +19,7 @@ export class ExhibitionCreationController {
   ) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   async createExhibition(
     @Request() req: any,
     @Body() createExhibitionRequestDto: CreateExhibitionRequestDto,
@@ -21,8 +32,10 @@ export class ExhibitionCreationController {
   }
 
   @Get()
-  async findAll() {
-    return await this.exhibitionCreationService.findAll();
+  async findByCategoryName(@Query('category-name') categoryName: string) {
+    return await this.exhibitionCreationService.findByCategoryName(
+      categoryName,
+    );
   }
 
   @Get('/:id')

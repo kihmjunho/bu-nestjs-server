@@ -20,7 +20,10 @@ export class ArtworkCreationService {
     createArtworkRequestDto: CreateArtworkRequestDto,
     userId: string,
   ) {
-    const artwork = this.artworkFactory.create(createArtworkRequestDto, userId);
+    const artwork = this.artworkFactory.create({
+      ...createArtworkRequestDto,
+      userId,
+    });
     const data = await this.artworkRepository.save(artwork);
 
     return new CreateContentResponseDto(data.id);
