@@ -6,7 +6,7 @@ import { JwtAuthModule } from './config/jwt/jwtAuth.module';
 import { CategoryModule } from './category/category.module';
 import { CreationModule } from './creation/creation.module';
 import { UploadModule } from './upload/upload.module';
-import { GuestModule } from './guest/guest.module';
+import { GuestbookModule } from './guestbook/guestbook.module';
 import { CommentModule } from './comment/comment.module';
 
 @Module({
@@ -18,7 +18,7 @@ import { CommentModule } from './comment/comment.module';
     CategoryModule,
     CreationModule,
     UploadModule,
-    GuestModule,
+    GuestbookModule,
     CommentModule,
   ],
   controllers: [],

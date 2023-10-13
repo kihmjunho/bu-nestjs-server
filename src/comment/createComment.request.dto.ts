@@ -5,9 +5,6 @@ export class CreateCommentRequestDto {
   comment: string;
 
   @IsNotEmpty()
-  userId: string;
-
-  @IsNotEmpty()
   contentId: string;
 
   @IsOptional()

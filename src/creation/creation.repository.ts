@@ -16,7 +16,6 @@ export class CreationRepository {
       'category.name = :categoryName',
       { categoryName },
     );
-    console.log(categoryName);
     return this.getPaginationData(query, queryBuilder);
   }
 

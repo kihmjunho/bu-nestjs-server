@@ -5,6 +5,9 @@ export class GetExhibitionParamResponseDto {
   title: string;
   description: string;
   thumbnail: string;
+  location: string;
+  start: string;
+  end: string;
   images: {
     url: string;
     seq: number;
@@ -19,6 +22,9 @@ export class GetExhibitionParamResponseDto {
     this.thumbnail = commonProperties.thumbnail;
     this.images = commonProperties.images;
     this.year = exhibition.year;
+    this.location = exhibition.location;
+    this.start = exhibition.start;
+    this.end = exhibition.end;
     this.userId = commonProperties.userId;
   }
 }
