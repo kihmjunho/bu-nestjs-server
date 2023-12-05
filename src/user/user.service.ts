@@ -21,14 +21,7 @@ export class UserService {
 
   public async signup(signupUserRequestDto: SignupUserRequestDto) {
     const { email, password, nickname } = signupUserRequestDto;
-
-    const existingUser = await this.userRepository.findByEmail(email);
-    if (existingUser) {
-      throw new ConflictException(
-        '중복된 이메일입니다',
-        'EMAIL_IS_ALREADY_DUPLICATED',
-      );
-    }
+    await this.userRepository.duplicateEmail(email);
 
     const user = new User({
       email,
@@ -43,16 +36,16 @@ export class UserService {
 
   async login(loginUserRequestDto: LoginUserRequestDto) {
     const { email, password } = loginUserRequestDto;
-
+    console.log(email);
     const user = await this.userRepository.findByEmail(email);
     if (!user) {
-      throw new NotFoundException('없는 사용자입니다', 'NOT_FOUND_USER');
+      throw new NotFoundException('not found user', 'NOT_FOUND_USER');
     }
 
     const passwordsMatch = await user.comparePassword(password);
     if (!passwordsMatch) {
       throw new UnauthorizedException(
-        '비밀번호가 일치하지 않습니다.',
+        'password dose not match',
         'PASSWORD_DOSE_NOT_MATCH',
       );
     }
